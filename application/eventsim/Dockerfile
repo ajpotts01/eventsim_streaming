@@ -13,7 +13,16 @@ RUN apt-get install -y openjdk-8-jdk scala sbt
 # Grab from viirya's fork of this project - the original has been dead for some time and doesn't work with sbt anymore
 #RUN git clone https://github.com/viirya/eventsim.git
 
+# COPY /bin /eventsim/bin
+# COPY /data /eventsim/data
+# COPY /examples /eventsim/examples
+# COPY /project /eventsim/project
+# COPY /src /eventsim/src
+
+# COPY ./java.config /
+
 COPY . /eventsim
+
 WORKDIR /eventsim
 RUN sbt assembly
 
@@ -21,5 +30,8 @@ RUN sbt assembly
 # The build from sbt assembly will create /eventsim/target/scala-2.12/eventsim-assembly-2.0.jar
 # bin/eventsim is simply an executable script to run that JAR with the JVM.
 RUN chmod +x bin/eventsim
-
-CMD [ "/bin/bash" ]
+RUN sed -i -e 's/\r$//' bin/eventsim
+# Use this in combination with docker run -it container_name:tag to debug things
+#CMD [ "/bin/bash" ]
+# Dev params - this will be changed later to add an actual confluent config
+CMD ./bin/eventsim -c examples/example-config.json --from 15 --nusers 2 -k 1

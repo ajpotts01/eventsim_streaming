@@ -1,6 +1,6 @@
 package io.confluent.eventsim
 
-import java.io.{File, FileOutputStream}
+import java.io.{File, FileOutputStream, FileInputStream}
 import java.time.ZoneOffset
 import java.util.Properties
 
@@ -35,15 +35,26 @@ object Output {
   private class KafkaEventWriter(val constructor: events.Constructor, val topic: String, val brokers: String) extends Object with canwrite {
 
     val props = new Properties()
-    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
-    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
+    //props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
+    //props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
     //if (constructor.isInstanceOf[JSONConstructor]) "org.apache.kafka.common.serialization.ByteArraySerializer"
     //else "io.confluent.kafka.serializers.KafkaAvroSerializer")
-    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers)
+    //props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers)
 
+    // Dodgy way to do this - just load file directly here
+    println("Reading file")
+    val inputStream = new FileInputStream("/eventsim/src/main/scala/io/confluent/eventsim/config/ccloud.properties")
+
+    println("Loading props")
+    props.load(inputStream)
+
+    println("Closing stream")
+    inputStream.close()
+    
     val producer = new KafkaProducer[Object, Object](props)
 
     def write() = {
+      println("Writing")
       val value =
         constructor match {
           case constructor1: events.AvroConstructor[Object] => constructor1.serialize(constructor.end())
