@@ -5,3 +5,4 @@ terraform.tfstate
 *.tfstate.backup
 *.tfstate
 aws_creds.ps1
+.venv/
