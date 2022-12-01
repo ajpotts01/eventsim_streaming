@@ -6,9 +6,17 @@ on:
     #   - warehouse/snowflake/data-transformation
   
 env:
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  GH_REF: ${{ github.ref }}
+  DBT_PROFILE_TARGET: prod
+  DBT_PROFILE_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_PROFILE_SNOWFLAKE_ACCOUNT }}
+  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
+  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+  DBT_PROFILE_ROLE: DBT_RW
+  DBT_PROFILE_DB: PRODUCTION
+  DBT_PROFILE_SCHEMA: STAGING
+  DBT_PROFILE_WH: ETL
+  # DB_HOST: ${{ secrets.DB_HOST }}
+  # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  # GH_REF: ${{ github.ref }}
 
 jobs:
   build-test:
