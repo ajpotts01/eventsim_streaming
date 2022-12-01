@@ -14,9 +14,10 @@ env:
   DBT_PROFILE_DB: PRODUCTION
   DBT_PROFILE_SCHEMA: PUBLIC
   DBT_PROFILE_WH: ETL
+  GH_REF: ${{ github.ref }}
   # DB_HOST: ${{ secrets.DB_HOST }}
   # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  # GH_REF: ${{ github.ref }}
+  
 
 jobs:
   build-test:
@@ -45,29 +46,29 @@ jobs:
           cd warehouse/snowflake/data-transformation/eventsim_elt
           dbt deps
 
-      # SQLFluff
+      # Run SQLFluff
       - name: SQL - Linting
         run: sqlfluff lint warehouse/snowflake/data-transformation/eventsim_elt
 
-      # Checkout main so manifest can be created
+      # Checkout to main so manifest can be created
       - name: Source code - checkout main
         uses: actions/checkout@v3
         with:
           ref: main
       
-      # DBT manifest generation
-      - name: SQL - Generate DBT manifest
+      # Create dbt manifest generation
+      - name: SQL - Generate dbt manifest
         run: |
-          cd warehouse/snowflake/data-transformation
+          cd warehouse/snowflake/data-transformation/eventsim_elt
           dbt deps
           dbt compile --target prod
 
       # Publish manifest
-      - name: SQL - Publish DBT manifest
+      - name: SQL - Publish dbt manifest
         uses: actions/upload-artifact@v3
         with:
           name: manifest.json
-          path: warehouse/snowflake/data-transformation/target/manifest.json
+          path: warehouse/snowflake/data-transformation/eventsim_elt/target/manifest.json
 
       # Go back to PR branch
       - name: Source code - checkout PR
@@ -78,7 +79,7 @@ jobs:
           name: manifest.json
           path: warehouse/snowflake/data-transformation
 
-      - name: SQL - DBT run
+      - name: SQL - dbt run
         run: |
           cd warehouse/snowflake/data-transformation
           dbt deps
