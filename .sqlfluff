@@ -1,0 +1,6 @@
+[sqlfluff]
+templater = dbt
+dialect = snowflake
+
+[sqlfluff:templater:dbt]
+project_dir = warehouse/snowflake/data-transformation/eventsim_elt
