@@ -32,5 +32,7 @@ models:
   eventsim_elt:
     staging:
       +materialized: view
+      +schema: staging
     marts:
-      +materialized: view
+      +materialized: table
+      +schema: marts
