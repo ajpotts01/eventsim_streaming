@@ -22,6 +22,6 @@ with raw as (
     record_content:state::string,
     record_content:lat::number,
     record_content:lon::number
-from {{ source('public', 'listen_events') }})
+from {{ source('confluent', 'listen_events') }})
 
 select * from raw
