@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: default
+    tables:
+      - name: auth_events
+      - name: listen_events
+      - name: page_view_events
