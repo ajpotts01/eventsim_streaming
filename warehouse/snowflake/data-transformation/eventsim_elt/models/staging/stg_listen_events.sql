@@ -13,7 +13,7 @@ final as (
         RECORD_CONTENT:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-         RECORD_CONTENT:"song"::VARCHAR as song_name,
+        RECORD_CONTENT:"song"::VARCHAR as song_name,
         RECORD_CONTENT:"artist"::VARCHAR as artist_name,
         RECORD_CONTENT:"city"::VARCHAR as city,
         RECORD_CONTENT:"firstName"::VARCHAR as first_name,
@@ -31,10 +31,6 @@ final as (
         -- date/times
         TO_TIMESTAMP_NTZ(REPLACE(RECORD_CONTENT:"ts"::NUMBER,',','')) as event_timestamp,
         TO_TIMESTAMP_NTZ(REPLACE(RECORD_CONTENT:"registration"::NUMBER,',','')) as user_registration_timestamp,
-
-        -- metadata
-        TO_TIMESTAMP_NTZ(RECORD_METADATA:"CreateTime"::varchar) as ingestion_time
-        
 
         -- metadata
         RECORD_METADATA:"CreateTime"::varchar as ingestion_time

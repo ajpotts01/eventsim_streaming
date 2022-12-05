@@ -1,25 +1,22 @@
 version: 2
 
 models:
-  - name: sth_status_change_events
+  - name: stg_status_change_events
     columns:
-      - name: createtime
-      - name: offset
-      - name: partition
-      - name: topic
-      - name: auth
+      - name: user_id
+      - name: session_id
       - name: city
-      - name: firstname
+      - name: first_name
+      - name: last_name
       - name: gender
-      - name: iteminsession
-      - name: lastname
-      - name: lat
-      - name: level
-      - name: lon
-      - name: registration
-      - name: sessionid
-      - name: state
-      - name: ts
-      - name: useragent
-      - name: userid
-      - name: zip
+      - name: item_in_session
+      - name: user_subscription_level
+      - name: user_agent
+      - name: zip_number
+      - name: state_of_residence
+      - name: latitude
+      - name: longitude
+      - name: authentication_status
+      - name: event_timestamp
+      - name: user_registration_timestamp
+      - name: ingestion_time
