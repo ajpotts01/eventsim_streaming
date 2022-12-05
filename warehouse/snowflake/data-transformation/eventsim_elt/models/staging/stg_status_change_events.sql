@@ -8,26 +8,26 @@ with raw_source as (
 final as (
 
     select
-        record_metadata:"CreateTime"::varchar as createtime,
-        record_metadata:"offset"::varchar as offset,
-        record_metadata:"partition"::varchar as partition,
-        record_metadata:"topic"::varchar as topic,
-        record_content:"auth"::varchar as auth,
-        record_content:"city"::varchar as city,
-        record_content:"firstName"::varchar as firstname,
-        record_content:"gender"::varchar as gender,
-        record_content:"itemInSession"::varchar as iteminsession,
-        record_content:"lastName"::varchar as lastname,
-        record_content:"lat"::varchar as lat,
-        record_content:"level"::varchar as level,
-        record_content:"lon"::varchar as lon,
-        record_content:"registration"::varchar as registration,
-        record_content:"sessionId"::varchar as sessionid,
-        record_content:"state"::varchar as state,
-        record_content:"ts"::varchar as ts,
-        record_content:"userAgent"::varchar as useragent,
-        record_content:"userId"::varchar as userid,
-        record_content:"zip"::varchar as zip
+        RECORD_METADATA:"CreateTime"::varchar as ingestion_time,
+        RECORD_METADATA:"offset"::varchar as kafka_offset,
+        RECORD_METADATA:"partition"::varchar as kafka_partition,
+        RECORD_METADATA:"topic"::varchar as kafka_topic,
+        RECORD_CONTENT:"userId"::NUMBER as user_id,
+        RECORD_CONTENT:"sessionId"::NUMBER as session_id,
+        RECORD_CONTENT:"ts"::NUMBER as timestamp,
+        RECORD_CONTENT:"auth"::VARCHAR as authentication_status,
+        RECORD_CONTENT:"city"::VARCHAR as city,
+        RECORD_CONTENT:"firstName"::VARCHAR as first_name,
+        RECORD_CONTENT:"lastName"::VARCHAR as last_name,
+        RECORD_CONTENT:"gender"::VARCHAR as gender,
+        RECORD_CONTENT:"itemInSession"::NUMBER as item_in_session,
+        RECORD_CONTENT:"level"::VARCHAR as user_subscription_level,
+        RECORD_CONTENT:"registration"::NUMBER as user_registration_number,
+        RECORD_CONTENT:"userAgent"::VARCHAR as user_agent,
+        RECORD_CONTENT:"zip"::NUMBER as zip_number,
+        RECORD_CONTENT:"state"::VARCHAR as state_of_residence,
+        RECORD_CONTENT:"lat"::NUMBER as latitude,
+        RECORD_CONTENT:"lon"::NUMBER as longitude
 
     from raw_source
 
