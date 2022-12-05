@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: listen_events
+    columns:
+      - name: createtime
+      - name: offset
+      - name: partition
+      - name: topic
+      - name: artist
+      - name: auth
+      - name: city
+      - name: duration
+      - name: firstname
+      - name: gender
+      - name: iteminsession
+      - name: lastname
+      - name: lat
+      - name: level
+      - name: lon
+      - name: registration
+      - name: sessionid
+      - name: song
+      - name: state
+      - name: ts
+      - name: useragent
+      - name: userid
+      - name: zip

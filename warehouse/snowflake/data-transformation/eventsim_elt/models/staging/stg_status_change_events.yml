@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: sth_status_change_events
+    columns:
+      - name: createtime
+      - name: offset
+      - name: partition
+      - name: topic
+      - name: auth
+      - name: city
+      - name: firstname
+      - name: gender
+      - name: iteminsession
+      - name: lastname
+      - name: lat
+      - name: level
+      - name: lon
+      - name: registration
+      - name: sessionid
+      - name: state
+      - name: ts
+      - name: useragent
+      - name: userid
+      - name: zip

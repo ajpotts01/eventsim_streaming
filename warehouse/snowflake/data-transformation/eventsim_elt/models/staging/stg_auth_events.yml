@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_auth_events
+    columns:
+      - name: record_content_userid_string
+      - name: record_content_sessionid_number
+      - name: record_content_ts_number
+      - name: record_content_status_number
+      - name: record_content_auth_string
+      - name: record_content_artist_string
+      - name: record_content_city_string
+      - name: record_content_duration_string
+      - name: record_content_firstname_string
+      - name: record_content_lastname_string
+      - name: record_content_gender_string
+      - name: record_content_iteminsession_number
+      - name: record_content_level_string
+      - name: record_content_method_string
+      - name: record_content_page_string
+      - name: record_content_registration_number
+      - name: record_content_useragent_string
+      - name: record_content_zip_number
+      - name: record_content_state_string
+      - name: record_content_lat_number
+      - name: record_content_lon_number
