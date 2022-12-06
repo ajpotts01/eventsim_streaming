@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: page_view_events
+    columns:
+      - name: createtime
+      - name: offset
+      - name: partition
+      - name: topic
+      - name: auth
+      - name: city
+      - name: firstname
+      - name: gender
+      - name: iteminsession
+      - name: lastname
+      - name: lat
+      - name: level
+      - name: lon
+      - name: method
+      - name: page
+      - name: registration
+      - name: sessionid
+      - name: state
+      - name: status
+      - name: ts
+      - name: useragent
+      - name: userid
+      - name: zip

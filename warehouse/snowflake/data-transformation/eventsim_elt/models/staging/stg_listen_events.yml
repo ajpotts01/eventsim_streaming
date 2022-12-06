@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_listen_events
+    columns:
+      - name: user_id
+      - name: session_id
+      - name: song_name
+      - name: artist_name
+      - name: city
+      - name: first_name
+      - name: last_name
+      - name: gender
+      - name: item_in_session
+      - name: user_subscription_level
+      - name: user_agent
+      - name: zip_number
+      - name: state_of_residence
+      - name: latitude
+      - name: longitude
+      - name: authentication_status
+      - name: event_timestamp
+      - name: user_registration_timestamp
+      - name: ingestion_time
+      

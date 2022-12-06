@@ -1,8 +1,10 @@
 version: 2
 
 sources:
-  - name: public
+  - name: confluent
+    database: raw
     tables:
       - name: auth_events
       - name: listen_events
       - name: page_view_events
+      - name: status_change_events
