@@ -83,7 +83,7 @@ object Output {
 
   val statusChangeConstructor: io.confluent.eventsim.events.StatusChange.Constructor =
     if (Main.useAvro) new AvroConstructor()
-    else new JSONConstructor()
+    else new io.confluent.eventsim.events.StatusChange.JSONConstructor()
 
   val kbl = Main.ConfFromOptions.kafkaBrokerList
   val dirName = new File(if (Main.ConfFromOptions.outputDir.isSupplied) Main.ConfFromOptions.outputDir.get.get else "output")
