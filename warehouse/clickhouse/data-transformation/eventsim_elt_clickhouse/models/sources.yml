@@ -1,8 +1,7 @@
 version: 2
 
 sources:
-  - name: confluent
-    database: raw
+  - name: default
     tables:
       - name: auth_events
       - name: listen_events

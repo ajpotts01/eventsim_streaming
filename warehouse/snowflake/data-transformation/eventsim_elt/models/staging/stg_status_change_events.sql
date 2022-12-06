@@ -1,22 +1,18 @@
 with raw_source as (
 
     select *
-    from {{ source('confluent', 'page_view_events') }}
+    from {{ source('confluent', 'status_change_events') }}
 
 ),
 
 final as (
-    -- same as listen
+
     select
         -- ids
         record_content:"userId"::NUMBER as user_id,
         record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-        record_content:"method"::VARCHAR as http_method,
-        record_content:"page"::VARCHAR as page_name,
-        record_content:"song"::VARCHAR as song_name,
-        record_content:"artist"::VARCHAR as artist_name,
         record_content:"city"::VARCHAR as city,
         record_content:"firstName"::VARCHAR as first_name,
         record_content:"lastName"::VARCHAR as last_name,
@@ -29,9 +25,6 @@ final as (
         record_content:"lat"::NUMBER as latitude,
         record_content:"lon"::NUMBER as longitude,
         record_content:"auth"::VARCHAR as authentication_status,
-
-        -- measures
-        record_content:"duration"::VARCHAR as song_duration,
 
         -- date/times
         TO_TIMESTAMP_NTZ(

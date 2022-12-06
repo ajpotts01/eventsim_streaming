@@ -1,0 +1,38 @@
+eventsim_elt_clickhouse:
+  outputs:
+    dev:
+      type: clickhouse
+      schema: default
+      host: "{{ env_var('CH_HOST') }}"
+      port: 8443
+      password: "{{ env_var('CH_PASSWORD') }}"
+      user: default
+      secure: True
+
+    ci:
+      type: clickhouse
+      schema: default
+      host: "{{ env_var('CH_HOST') }}"
+      port: 8443
+      password: "{{ env_var('CH_PASSWORD') }}"
+      user: default
+      secure: True
+
+    preprod:
+      type: clickhouse
+      schema: default
+      host: "{{ env_var('CH_HOST') }}"
+      port: 8443
+      password: "{{ env_var('CH_PASSWORD') }}"
+      user: default
+      secure: True     
+
+    prod:
+      type: clickhouse
+      schema: default
+      host: "{{ env_var('CH_HOST') }}"
+      port: 8443
+      password: "{{ env_var('CH_PASSWORD') }}"
+      user: default
+      secure: True      
+  target: dev    
