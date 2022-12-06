@@ -34,12 +34,12 @@ jobs:
       # Install dbt packages
       - name: dbt deps
         run: |
-          cd warehouse/clickhouse/data-transformation/eventsim_elt
+          cd warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
           dbt deps
 
       # Run SQLFluff
       - name: SQL - Linting
-        run: sqlfluff lint warehouse/clickhouse/data-transformation/eventsim_elt
+        run: sqlfluff lint warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
 
       # Checkout to main so manifest can be created
       - name: Source code - checkout main
@@ -50,7 +50,7 @@ jobs:
       # Create dbt manifest generation
       - name: SQL - Generate dbt manifest
         run: |
-          cd warehouse/clickhouse/data-transformation/eventsim_elt
+          cd warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
           dbt deps
           dbt compile --target prod
 
@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: manifest.json
-          path: warehouse/clickhouse/data-transformation/eventsim_elt/target/manifest.json
+          path: warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse/target/manifest.json
 
       # Go back to PR branch
       - name: Source code - checkout PR
@@ -68,11 +68,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: manifest.json
-          path: warehouse/clickhouse/data-transformation
+          path: warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
 
       - name: SQL - dbt run
         run: |
-          cd warehouse/clickhouse/data-transformation
+          cd warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
           dbt deps
           dbt run -m state:modified+1 --defer --state . --target ci
           dbt test -m state:modified+1 --defer --state . --target ci
