@@ -29,6 +29,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
 models:
-  eventsim_elt:
-    staging:
-      +materialized: view
+  staging:
+    +materialized: view
+    +schema: staging
+  marts:
+    +materialized: view
+    +schema: marts

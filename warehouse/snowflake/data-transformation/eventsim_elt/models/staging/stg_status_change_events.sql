@@ -1,20 +1,18 @@
 with raw_source as (
 
     select *
-    from {{ source('confluent', 'listen_events') }}
+    from {{ source('confluent', 'status_change_events') }}
 
 ),
 
 final as (
--- same as auth + song column
+
     select
         -- ids
         RECORD_CONTENT:"userId"::NUMBER as user_id,
         RECORD_CONTENT:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-        RECORD_CONTENT:"song"::VARCHAR as song_name,
-        RECORD_CONTENT:"artist"::VARCHAR as artist_name,
         RECORD_CONTENT:"city"::VARCHAR as city,
         RECORD_CONTENT:"firstName"::VARCHAR as first_name,
         RECORD_CONTENT:"lastName"::VARCHAR as last_name,
@@ -33,7 +31,7 @@ final as (
         TO_TIMESTAMP_NTZ(REPLACE(RECORD_CONTENT:"registration"::NUMBER,',','')) as user_registration_timestamp,
 
         -- metadata
-        RECORD_METADATA:"CreateTime"::varchar as ingestion_time
+        TO_TIMESTAMP_NTZ(RECORD_METADATA:"CreateTime"::varchar) as ingestion_time
         -- RECORD_METADATA:"offset"::varchar as kafka_offset,
         -- RECORD_METADATA:"partition"::varchar as kafka_partition,
         -- RECORD_METADATA:"topic"::varchar as kafka_topic,
