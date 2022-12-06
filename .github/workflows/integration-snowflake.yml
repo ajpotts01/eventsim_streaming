@@ -2,11 +2,11 @@ name: integration-snowflake
 on:
   pull_request:
     branches: [ main ]
-    # paths:
-    #   - warehouse/snowflake/data-transformation
+    paths:
+      - warehouse/snowflake/data-transformation
   
 env:
-  DBT_PROFILE_TARGET: prod
+  DBT_PROFILE_TARGET: ci
   DBT_PROFILE_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_PROFILE_SNOWFLAKE_ACCOUNT }}
   DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
   DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}

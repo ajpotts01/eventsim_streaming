@@ -1,12 +1,10 @@
 /*
-  "ts": 1662485273786,
-  "sessionId": 30,
-  "page": "NextSong",
+{
+  "ts": 1663229143786,
+  "sessionId": 67,
   "auth": "Logged In",
-  "method": "PUT",
-  "status": 200,
   "level": "free",
-  "itemInSession": 20,
+  "itemInSession": 21,
   "city": "Los Angeles",
   "zip": "90045",
   "state": "CA",
@@ -17,20 +15,14 @@
   "lastName": "King",
   "firstName": "Hollis",
   "gender": "M",
-  "registration": 1662460277786,
-  "artist": "Kings Of Leon",
-  "song": "Use Somebody",
-  "duration": 231.81017
+  "registration": 1662460277786
+}
 */
-
-CREATE TABLE page_view_events
+CREATE TABLE status_change_events
 (
     ts Int64,
     sessionId Int64,
-    page String,
     auth String,
-    method String,
-    status Int64,
     level String,
     itemInSession Int64,
     city String,
@@ -42,9 +34,6 @@ CREATE TABLE page_view_events
     userId Int64,
     lastName String,
     firstName String,
-    gender String,
-    registration Int64,
-    artist String,
-    song String,
-    duration Float64
+    gender LowCardinality(String),
+    registration Int64
 ) ENGINE = MergeTree ORDER BY (ts)

@@ -1,4 +1,4 @@
-name: integration-snowflake
+name: integration-clickhouse
 on:
   pull_request:
     branches: [ main ]

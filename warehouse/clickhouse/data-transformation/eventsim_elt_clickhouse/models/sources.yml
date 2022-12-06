@@ -6,3 +6,4 @@ sources:
       - name: auth_events
       - name: listen_events
       - name: page_view_events
+      - name: status_change_events
