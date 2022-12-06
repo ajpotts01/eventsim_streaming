@@ -78,7 +78,7 @@ jobs:
 
       - name: SQL - dbt run
         run: |
-          cd warehouse/snowflake/data-transformation
+          cd warehouse/snowflake/data-transformation/eventsim_elt
           dbt deps
           dbt run -m state:modified+1 --defer --state . --target ci
           dbt test -m state:modified+1 --defer --state . --target ci
