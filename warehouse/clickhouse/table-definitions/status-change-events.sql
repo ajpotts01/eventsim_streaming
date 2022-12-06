@@ -25,7 +25,7 @@ CREATE TABLE status_change_events
     auth String,
     level String,
     itemInSession Int64,
-    city String,
+    city String,    
     zip String,
     state String,
     userAgent String,

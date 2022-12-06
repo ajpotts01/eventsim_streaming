@@ -2,8 +2,8 @@ name: integration-clickhouse
 on:
   pull_request:
     branches: [ main ]
-    # paths:
-    #   - warehouse/snowflake/data-transformation
+    paths:
+      - warehouse/clickhouse/data-transformation
   
 env:
   CH_HOST: ${{ secrets.CH_HOST }}

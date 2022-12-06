@@ -6,42 +6,48 @@ with raw_source as (
 ),
 
 final as (
--- same as listen
+    -- same as listen
     select
         -- ids
-        RECORD_CONTENT:"userId"::NUMBER as user_id,
-        RECORD_CONTENT:"sessionId"::NUMBER as session_id,
+        record_content:"userId"::NUMBER as user_id,
+        record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-        RECORD_CONTENT:"method"::VARCHAR as http_method,
-        RECORD_CONTENT:"page"::VARCHAR as page_name,
-        RECORD_CONTENT:"song"::VARCHAR as song_name,
-        RECORD_CONTENT:"artist"::VARCHAR as artist_name,
-        RECORD_CONTENT:"city"::VARCHAR as city,
-        RECORD_CONTENT:"firstName"::VARCHAR as first_name,
-        RECORD_CONTENT:"lastName"::VARCHAR as last_name,
-        RECORD_CONTENT:"gender"::VARCHAR as gender,
-        RECORD_CONTENT:"itemInSession"::NUMBER as item_in_session,
-        RECORD_CONTENT:"level"::VARCHAR as user_subscription_level,
-        RECORD_CONTENT:"userAgent"::VARCHAR as user_agent,
-        RECORD_CONTENT:"zip"::NUMBER as zip_number,
-        RECORD_CONTENT:"state"::VARCHAR as state_of_residence,
-        RECORD_CONTENT:"lat"::NUMBER as latitude,
-        RECORD_CONTENT:"lon"::NUMBER as longitude,
-        RECORD_CONTENT:"auth"::VARCHAR as authentication_status,
+        record_content:"method"::VARCHAR as http_method,
+        record_content:"page"::VARCHAR as page_name,
+        record_content:"song"::VARCHAR as song_name,
+        record_content:"artist"::VARCHAR as artist_name,
+        record_content:"city"::VARCHAR as city,
+        record_content:"firstName"::VARCHAR as first_name,
+        record_content:"lastName"::VARCHAR as last_name,
+        record_content:"gender"::VARCHAR as gender,
+        record_content:"itemInSession"::NUMBER as item_in_session,
+        record_content:"level"::VARCHAR as user_subscription_level,
+        record_content:"userAgent"::VARCHAR as user_agent,
+        record_content:"zip"::NUMBER as zip_number,
+        record_content:"state"::VARCHAR as state_of_residence,
+        record_content:"lat"::NUMBER as latitude,
+        record_content:"lon"::NUMBER as longitude,
+        record_content:"auth"::VARCHAR as authentication_status,
 
         -- measures
-         RECORD_CONTENT:"duration"::VARCHAR as song_duration,
+        record_content:"duration"::VARCHAR as song_duration,
 
         -- date/times
-        TO_TIMESTAMP_NTZ(REPLACE(RECORD_CONTENT:"ts"::NUMBER,',','')) as event_timestamp,
-        TO_TIMESTAMP_NTZ(REPLACE(RECORD_CONTENT:"registration"::NUMBER,',','')) as user_registration_timestamp,
+        TO_TIMESTAMP_NTZ(
+            REPLACE(record_content:"ts"::NUMBER, ',', '')
+        ) as event_timestamp,
+        TO_TIMESTAMP_NTZ(
+            REPLACE(record_content:"registration"::NUMBER, ',', '')
+        ) as user_registration_timestamp,
 
         -- metadata
-        TO_TIMESTAMP_NTZ(RECORD_METADATA:"CreateTime"::varchar) as ingestion_time
-        -- RECORD_METADATA:"offset"::varchar as kafka_offset,
-        -- RECORD_METADATA:"partition"::varchar as kafka_partition,
-        -- RECORD_METADATA:"topic"::varchar as kafka_topic,
+        TO_TIMESTAMP_NTZ(
+            record_metadata:"CreateTime"::VARCHAR
+        ) as ingestion_time
+    -- RECORD_METADATA:"offset"::varchar as kafka_offset,
+    -- RECORD_METADATA:"partition"::varchar as kafka_partition,
+    -- RECORD_METADATA:"topic"::varchar as kafka_topic,
     from raw_source
 
 )
