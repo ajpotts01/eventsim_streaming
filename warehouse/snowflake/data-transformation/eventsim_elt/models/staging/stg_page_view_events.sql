@@ -9,6 +9,7 @@ final as (
 -- same as listen
     select
         -- ids
+        CONCAT(RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as page_view_id,
         RECORD_CONTENT:"userId"::NUMBER as user_id,
         RECORD_CONTENT:"sessionId"::NUMBER as session_id,
 
@@ -39,9 +40,10 @@ final as (
 
         -- metadata
         TO_TIMESTAMP_NTZ(RECORD_METADATA:"CreateTime"::varchar) as ingestion_time
+        -- RECORD_METADATA:"CreateTime"::varchar,
         -- RECORD_METADATA:"offset"::varchar as kafka_offset,
         -- RECORD_METADATA:"partition"::varchar as kafka_partition,
-        -- RECORD_METADATA:"topic"::varchar as kafka_topic,
+        -- RECORD_METADATA:"topic"::varchar as kafka_topic
     from raw_source
 
 )
