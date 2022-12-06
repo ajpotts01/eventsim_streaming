@@ -9,7 +9,7 @@ final as (
 
     select
         -- ids
-        record_content:"userId"::NUMBER as user_id,
+        RECORD_CONTENT:"userId"::NUMBER as user_id,
         record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
