@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - warehouse/clickhouse/data-transformation
+      - 'warehouse/clickhouse/data-transformation/**'
   
 env:
   CH_HOST: ${{ secrets.CH_HOST }}

@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - warehouse/snowflake/data-transformation
+      - 'warehouse/snowflake/data-transformation/**'
   
 env:
   DBT_PROFILE_TARGET: ci
