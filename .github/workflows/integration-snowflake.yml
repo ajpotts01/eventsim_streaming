@@ -1,0 +1,87 @@
+name: integration-snowflake
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - warehouse/snowflake/data-transformation
+  
+env:
+  DBT_PROFILE_TARGET: ci
+  DBT_PROFILE_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_PROFILE_SNOWFLAKE_ACCOUNT }}
+  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
+  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+  DBT_PROFILE_ROLE: DBT_RW
+  DBT_PROFILE_DB: PRODUCTION
+  DBT_PROFILE_SCHEMA: PUBLIC
+  DBT_PROFILE_WH: ETL
+  GH_REF: ${{ github.ref }}  
+
+jobs:
+  build-test:
+    runs-on: ubuntu-22.04
+
+    steps:
+      # Checkout to latest commit of the branch initiating the PR
+      - name: Source code - checkout PR
+        uses: actions/checkout@v3
+      
+      # Python setup 
+      - name: Python - initial setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      
+      # Install Python deps
+      - name: Python - dependencies setup
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r warehouse/snowflake/data-transformation/requirements.txt
+          
+      # Install dbt packages
+      - name: dbt deps
+        run: |
+          cd warehouse/snowflake/data-transformation/eventsim_elt
+          dbt deps
+
+      # Run SQLFluff
+      - name: SQL - Linting
+        run: sqlfluff lint warehouse/snowflake/data-transformation/eventsim_elt
+
+      # Checkout to main so manifest can be created
+      - name: Source code - checkout main
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      
+      # Create dbt manifest generation
+      - name: SQL - Generate dbt manifest
+        run: |
+          cd warehouse/snowflake/data-transformation/eventsim_elt
+          dbt deps
+          dbt compile --target prod
+
+      # Publish manifest
+      - name: SQL - Publish dbt manifest
+        uses: actions/upload-artifact@v3
+        with:
+          name: manifest.json
+          path: warehouse/snowflake/data-transformation/eventsim_elt/target/manifest.json
+
+      # Go back to PR branch
+      - name: Source code - checkout PR
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: manifest.json
+          path: warehouse/snowflake/data-transformation
+
+      - name: SQL - dbt run
+        run: |
+          cd warehouse/snowflake/data-transformation
+          dbt deps
+          dbt run -m state:modified+1 --defer --state . --target ci
+          dbt test -m state:modified+1 --defer --state . --target ci
+
+
+    
