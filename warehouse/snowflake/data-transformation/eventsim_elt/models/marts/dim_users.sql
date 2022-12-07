@@ -1,4 +1,4 @@
-with stg_user as (
+with stg_users as (
     select 
         user_id,
         first_name,
@@ -12,7 +12,7 @@ with stg_user as (
 
 , transformed as (
     select
-        {{ dbt_utils.generate_surrogate_key(['user_id']) }} as user_key, -- surrogate key: https://github.com/dbt-labs/dbt-utils#surrogate_key-source    
+        {{ dbt_utils.generate_surrogate_key(['user_id']) }} as user_key, 
         user_id,
         first_name,
         last_name,
@@ -20,7 +20,7 @@ with stg_user as (
         city,
         zip_number,
         state_of_residence
-    from stg_user
+    from stg_users
 )
 select *
 from transformed
