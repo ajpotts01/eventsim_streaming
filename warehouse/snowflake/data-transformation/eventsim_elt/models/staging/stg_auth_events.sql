@@ -8,9 +8,12 @@ with raw_source as (
 final as (
 
     select
+        RECORD_METADATA:"topic" as stream_topic,
+
         -- ids
-        CONCAT(RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as auth_event_id,
-        record_content:"userId"::NUMBER as user_id,
+        CONCAT(RECORD_METADATA:"topic", '-', RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as auth_event_id,
+        -- record_content:"userId"::NUMBER as user_id,
+        {{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 'record_content:"lastName"::VARCHAR']) }} as user_key,
         record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
