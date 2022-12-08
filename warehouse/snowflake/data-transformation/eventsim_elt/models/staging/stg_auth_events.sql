@@ -14,8 +14,8 @@ final as (
 
         -- dimensions
         record_content:"city"::VARCHAR as city,
-        record_content:"firstName"::VARCHAR as first_name,
-        record_content:"lastName"::VARCHAR as last_name,
+        record_content:"firstName"::VARCHAR as "first_name",
+        record_content:"lastName"::VARCHAR as "last_name",
         record_content:"gender"::VARCHAR as gender,
         record_content:"itemInSession"::NUMBER as item_in_session,
         record_content:"level"::VARCHAR as user_subscription_level,
