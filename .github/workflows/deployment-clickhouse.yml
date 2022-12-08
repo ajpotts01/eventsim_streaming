@@ -20,15 +20,15 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.dev_ecr }}
-          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          username: ${{ secrets.AWS_ACCESS_KEY }}
+          password: ${{ secrets.AWS_SECRET_KEY }}
 
       - name: Container - login to registry (prod)
         uses: docker/login-action@v2
         with:
           registry: ${{ env.prod_ecr }}
-          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          username: ${{ secrets.AWS_ACCESS_KEY }}
+          password: ${{ secrets.AWS_SECRET_KEY }}
 
       - name: Container - Upload
         uses: docker/build-push-action@v2
