@@ -1,4 +1,5 @@
 eventsim_elt:
+  target: dev
   outputs:
     dev:
       account: "{{ env_var('DBT_PROFILE_SNOWFLAKE_ACCOUNT') }}"
