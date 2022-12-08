@@ -1,6 +1,6 @@
 [sqlfluff]
 templater = dbt
-dialect = snowflake
+dialect = clickhouse
 
 [sqlfluff:templater:dbt]
 project_dir = warehouse/snowflake/data-transformation/eventsim_elt
