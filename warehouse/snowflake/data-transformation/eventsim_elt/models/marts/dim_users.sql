@@ -16,8 +16,7 @@ stg_status_change_events as (
 
 transformed as (
     select
-        {{ dbt_utils.generate_surrogate_key(['stg_auth_events.user_id']) }} as user_key, 
-        stg_auth_events.user_id,
+        stg_auth_events.user_key, 
         stg_auth_events.first_name,
         stg_auth_events.last_name,
         stg_auth_events.gender,
@@ -25,11 +24,11 @@ transformed as (
     from stg_auth_events
 
 full outer join stg_listen_events 
-on stg_auth_events.user_id = stg_listen_events.user_id
+on stg_auth_events.user_key = stg_listen_events.user_key
 full outer join stg_page_view_events
-on stg_listen_events.user_id = stg_page_view_events.user_id
+on stg_listen_events.user_key = stg_page_view_events.user_key
 full outer join stg_status_change_events
-on stg_page_view_events.user_id = stg_status_change_events.user_id
+on stg_page_view_events.user_key = stg_status_change_events.user_key
 )
 
 select *

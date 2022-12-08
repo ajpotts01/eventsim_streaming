@@ -21,7 +21,7 @@ select
     -- {{ dbt_utils.generate_surrogate_key(['listen_event_id']) }} as listen_event_key,
     -- {{ dbt_utils.generate_surrogate_key(['page_view_id']) }} as page_view_key,
     -- {{ dbt_utils.generate_surrogate_key(['status_change_event_id']) }} as status_change_event_key,
-    stg_listen_events.user_id,
+    stg_listen_events.user_key,
     stg_listen_events.session_id,
     stg_listen_events.song_name,
     stg_listen_events.artist_name,
