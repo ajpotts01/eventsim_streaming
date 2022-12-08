@@ -7,15 +7,15 @@ stg_page_view_events as (
 ),
 
 dim_artists as (
-select 
-    {{ dbt_utils.generate_surrogate_key(['stg_listen_events.artist_name']) }} as artist_key,
-    stg_listen_events.artist_name,
-    stg_listen_events.song_name
-from 
-    stg_listen_events
-full outer join stg_page_view_events
-on stg_listen_events.artist_name = stg_page_view_events.artist_name
+    select
+{{ dbt_utils.generate_surrogate_key(['stg_listen_events.artist_name']) }} as artist_key,
+        stg_listen_events.artist_name,
+        stg_listen_events.song_name
+    from
+        stg_listen_events
+    full outer join stg_page_view_events
+        on stg_listen_events.artist_name = stg_page_view_events.artist_name
 )
 
-select * 
+select *
 from dim_artists

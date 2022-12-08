@@ -15,7 +15,7 @@ stg_status_change_events as (
 ),
 
 dim_sessions as (
-    select 
+    select
         stg_page_view_events.session_key,
         stg_page_view_events.zip_number,
         stg_page_view_events.state_of_residence,
@@ -27,12 +27,13 @@ dim_sessions as (
         stg_page_view_events.authentication_status
     from
         stg_page_view_events
-    left join stg_listen_events 
-    on  stg_page_view_events.session_key = stg_listen_events.session_key
+    left join stg_listen_events
+        on stg_page_view_events.session_key = stg_listen_events.session_key
     left join stg_status_change_events
-    on stg_page_view_events.session_key = stg_status_change_events.session_key
+        on
+            stg_page_view_events.session_key = stg_status_change_events.session_key
     left join stg_auth_events
-    on stg_page_view_events.session_key = stg_auth_events.session_key
+        on stg_page_view_events.session_key = stg_auth_events.session_key
 )
 
 select *

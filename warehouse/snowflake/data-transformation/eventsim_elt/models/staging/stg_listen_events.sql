@@ -8,14 +8,22 @@ with raw_source as (
 final as (
     -- same as auth + song column
     select
-        RECORD_METADATA:"topic"::VARCHAR as topic_name,
-        
+        record_metadata:"topic"::VARCHAR as topic_name,
+
         -- ids
-        CONCAT(RECORD_METADATA:"topic", '-', RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as listen_event_id,
+        CONCAT(
+            record_metadata:"topic",
+            '-',
+            record_metadata:"partition"::INTEGER,
+            '-',
+            record_metadata:"offset"::INTEGER,
+            '-',
+            record_metadata:"CreateTime"::INTEGER
+        ) as listen_event_id,
         -- record_content:"userId"::NUMBER as user_id,
-        {{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 'record_content:"lastName"::VARCHAR']) }} as user_key,
+{{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 'record_content:"lastName"::VARCHAR']) }} as user_key,
         -- record_content:"sessionId"::NUMBER as session_id,
-        {{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
+{{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
 
         -- dimensions
         record_content:"song"::VARCHAR as song_name,
