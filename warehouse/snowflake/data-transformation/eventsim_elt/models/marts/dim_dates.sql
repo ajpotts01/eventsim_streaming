@@ -1,7 +1,7 @@
 with stg_dates as (
     select * from {{ ref('stg_dates') }}
 )
-, transformed as (
+, dim_dates as (
     select 
         {{ dbt_utils.generate_surrogate_key(['date_day']) }} as date_key,
         *
@@ -9,4 +9,4 @@ with stg_dates as (
 )
 
 select * 
-from transformed
+from dim_dates
