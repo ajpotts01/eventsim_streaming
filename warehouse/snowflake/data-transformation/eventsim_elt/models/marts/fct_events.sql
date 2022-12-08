@@ -27,8 +27,8 @@ select
 from
     stg_auth_events
 full outer join stg_listen_events 
-on stg_auth_events.session_id = stg_listen_events.session_id
+on stg_auth_events.session_key = stg_listen_events.session_key
 full outer join stg_page_view_events
-on stg_listen_events.session_id = stg_page_view_events.session_id
+on stg_listen_events.session_key = stg_page_view_events.session_key
 full outer join stg_status_change_events
-on stg_page_view_events.session_id = stg_status_change_events.session_id
+on stg_page_view_events.session_key = stg_status_change_events.session_key

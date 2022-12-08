@@ -8,7 +8,7 @@ with raw_source as (
 final as (
     -- same as listen
     select
-        RECORD_METADATA:"topic" as topic_name,
+        RECORD_METADATA:"topic"::VARCHAR as topic_name,
 
         -- ids
         CONCAT(RECORD_METADATA:"topic", '-', RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as page_view_id,
