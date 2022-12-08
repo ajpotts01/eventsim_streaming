@@ -15,7 +15,7 @@ final as (
         -- record_content:"userId"::NUMBER as user_id,
         {{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 'record_content:"lastName"::VARCHAR']) }} as user_key,
         -- RECORD_CONTENT:"sessionId"::NUMBER as session_id,
-        {{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 'RECORD_METADATA:"topic"', 'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
+        {{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
 
         -- dimensions
         record_content:"method"::VARCHAR as http_method,

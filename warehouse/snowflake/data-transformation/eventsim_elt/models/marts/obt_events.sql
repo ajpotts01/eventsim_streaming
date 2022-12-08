@@ -40,13 +40,13 @@ select
     stg_page_view_events.authentication_status,
     stg_page_view_events.http_method
 from
-    stg_auth_events
-full outer join stg_listen_events 
-on stg_auth_events.session_key = stg_listen_events.session_key
-full outer join stg_page_view_events
-on stg_listen_events.session_key = stg_page_view_events.session_key
-full outer join stg_status_change_events
+     stg_page_view_events
+left join stg_listen_events 
+on  stg_page_view_events.session_key = stg_listen_events.session_key
+left join stg_status_change_events
 on stg_page_view_events.session_key = stg_status_change_events.session_key
+left join stg_auth_events
+on stg_page_view_events.session_key = stg_auth_events.session_key
 )
 
 select *
