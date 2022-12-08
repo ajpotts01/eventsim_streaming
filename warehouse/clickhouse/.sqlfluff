@@ -1,0 +1,13 @@
+[sqlfluff]
+templater = dbt
+dialect = clickhouse
+exclude_rules = L014, L030
+
+[sqlfluff:templater:dbt]
+project_dir = data-transformation/eventsim_elt_clickhouse
+profiles_dir = data-transformation/eventsim_elt_clickhouse
+profile = eventsim_elt_clickhouse
+target = ci
+
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = True

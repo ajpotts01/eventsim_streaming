@@ -1,6 +1,7 @@
 SELECT
     ts,
     sessionId,
+    auth,
     level,
     itemInSession,
     city,
@@ -14,6 +15,6 @@ SELECT
     firstName,
     gender,
     registration,
-    success
+    FROM_UNIXTIME(ts, 'UTC') AS status_change_time
 FROM
-    {{ source('default', 'auth_events') }}
+    {{ source('default', 'status_change_events') }}
