@@ -39,7 +39,9 @@ jobs:
 
       # Run SQLFluff
       - name: SQL - Linting
-        run: sqlfluff lint warehouse/clickhouse/data-transformation/eventsim_elt_clickhouse
+        run: |
+          cd warehouse/clickhouse
+          sqlfluff lint ./data-transformation/eventsim_elt_clickhouse
 
       # Checkout to main so manifest can be created
       - name: Source code - checkout main

@@ -1,0 +1,129 @@
+name: deployment-clickhouse
+on:
+  workflow_dispatch:
+
+env:
+  dev_ecr: 860840224074.dkr.ecr.ap-southeast-2.amazonaws.com/eventsim-streaming-dbt-clickhouse-dev
+  prod_ecr: 860840224074.dkr.ecr.ap-southeast-2.amazonaws.com/eventsim-streaming-dbt-clickhouse-prod
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Source code - checkout main
+        uses: actions/checkout@v3
+
+      - name: Container - build setup
+        uses: docker/setup-buildx-action@v2
+
+      - name: Container - login to registry (dev/preprod)
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.dev_ecr }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Container - login to registry (prod)
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.prod_ecr }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Container - Upload
+        uses: docker/build-push-action@v2
+        with:
+          context: warehouse/clickhouse/data-transformation
+          push: true
+          tags: |
+            ${{ env.dev_ecr }}:${{ github.sha }}
+            ${{ env.prod_ecr }}:${{ github.sha }}
+  
+  dev_preprod:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Source code - checkout main
+        uses: actions/checkout@v3
+
+      - name: Container - update cluster service task (dev/preprod)      
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: warehouse/clickhouse/data-transformation/task-definition.preprod.json
+          container-name: eventsim-streaming-dbt-clickhouse
+          image: ${{ env.dev_ecr }}:${{ github.sha }}
+          environment-variables: |
+            TARGET=preprod
+            CH_HOST=${{ secrets.CH_HOST }}
+            CH_PASSWORD=${{ secrets.CH_PASSWORD }}        
+
+      - name: Container - login to cluster
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-access-secret-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-southeast-2    
+
+      - name: Container - deploy task (dev/preprod)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+
+      - name: Container - run task (dev/preprod)
+        id: run_ecs
+        run: |
+          task_arn=$(aws ecs run-task --task-definition eventsim-streaming-dbt-clickhouse --cluster eventsim-streaming-ecs-dev | jq '.tasks[0].taskArn' --raw-output) 
+          echo $task_arn
+          echo "::set-output name=task_arn::${task_arn}"
+
+      - name: Container - await task finish (dev/preprod)
+        run: |
+          aws ecs wait tasks-stopped --cluster eventsim-streaming-ecs-dev --tasks ${{ steps.run_ecs.outputs.task_arn }}
+          exit_code=$(aws ecs describe-tasks --cluster eventsim-streaming-ecs-dev --tasks ${{ steps.run_ecs.outputs.task_arn }} | jq '.tasks[0].containers[0].exitCode' --raw-output)
+          exit ${exit_code}
+
+  prod:
+    needs: dev_preprod
+    runs-on: ubuntu-22.04
+
+    steps:
+          - name: Source code - checkout main
+            uses: actions/checkout@v3
+
+          - name: Container - update cluster service task (prod)      
+            id: task-def
+            uses: aws-actions/amazon-ecs-render-task-definition@v1
+            with:
+              task-definition: warehouse/clickhouse/data-transformation/task-definition.prod.json
+              container-name: eventsim-streaming-dbt-clickhouse
+              image: ${{ env.dev_ecr }}:${{ github.sha }}
+              environment-variables: |
+                TARGET=prod
+                CH_HOST=${{ secrets.CH_HOST }}
+                CH_PASSWORD=${{ secrets.CH_PASSWORD }}        
+
+          - name: Container - login to cluster
+            uses: aws-actions/configure-aws-credentials@v1
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+              aws-access-secret-key: ${{ secrets.AWS_SECRET_KEY }}
+              aws-region: ap-southeast-2    
+
+          - name: Container - deploy task (prod)
+            uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+            with:
+              task-definition: ${{ steps.task-def.outputs.task-definition }}
+
+          - name: Container - run task (prod)
+            id: run_ecs
+            run: |
+              task_arn=$(aws ecs run-task --task-definition eventsim-streaming-dbt-clickhouse --cluster eventsim-streaming-ecs-prod | jq '.tasks[0].taskArn' --raw-output) 
+              echo $task_arn
+              echo "::set-output name=task_arn::${task_arn}"
+
+          - name: Container - await task finish (prod)
+            run: |
+              aws ecs wait tasks-stopped --cluster eventsim-streaming-ecs-prod --tasks ${{ steps.run_ecs.outputs.task_arn }}
+              exit_code=$(aws ecs describe-tasks --cluster eventsim-streaming-ecs-prod --tasks ${{ steps.run_ecs.outputs.task_arn }} | jq '.tasks[0].containers[0].exitCode' --raw-output)
+              exit ${exit_code}    
