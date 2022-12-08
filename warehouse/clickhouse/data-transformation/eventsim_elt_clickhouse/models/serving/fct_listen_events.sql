@@ -3,21 +3,21 @@ SELECT
     song,
     duration,
     ts,
-    sessionid,
+    sessionId,
     auth,
     level,
-    iteminsession,
+    itemInSession,
     city,
     zip,
     state,
-    useragent,
+    userAgent,
     lon,
     lat,
-    userid,
-    lastname,
-    firstname,
+    userId,
+    lastName,
+    firstName,
     gender,
     registration,
-    TOTIMEZONE(ts, 'UTC') AS listen_time
+    toTimeZone(ts, 'UTC') AS listen_time
 FROM
     {{ source('default', 'listen_events') }}

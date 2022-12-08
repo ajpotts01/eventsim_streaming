@@ -1,6 +1,7 @@
 [sqlfluff]
 templater = dbt
-dialect = snowflake
+dialect = clickhouse
+exclude_rules = L014, L030
 
 [sqlfluff:templater:dbt]
 project_dir = data-transformation/eventsim_elt_clickhouse

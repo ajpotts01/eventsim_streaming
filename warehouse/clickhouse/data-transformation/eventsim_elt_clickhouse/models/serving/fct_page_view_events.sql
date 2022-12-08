@@ -1,22 +1,22 @@
 SELECT
     ts,
-    sessionid,
+    sessionId,
     page,
     auth,
     method,
     status,
     level,
-    iteminsession,
+    itemInSession,
     city,
     zip,
     state,
-    useragent,
-    userid,
+    userAgent,
+    userId,
     lon,
     lat,
     artist,
     song,
     duration,
-    TOTIMEZONE(ts, 'UTC') AS page_view_time
+    toTimeZone(ts, 'UTC') AS page_view_time
 FROM
     {{ source('default', 'page_view_events') }}

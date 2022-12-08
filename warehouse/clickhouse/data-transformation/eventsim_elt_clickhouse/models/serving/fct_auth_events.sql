@@ -1,20 +1,20 @@
 SELECT
     ts,
-    sessionid,
+    sessionId,
     level,
-    iteminsession,
+    itemInSession,
     city,
     zip,
     state,
-    useragent,
+    userAgent,
     lon,
     lat,
-    userid,
-    lastname,
-    firstname,
+    userId,
+    lastName,
+    firstName,
     gender,
     registration,
     success,
-    TOTIMEZONE(ts, 'UTC') AS auth_time
+    toTimeZone(ts, 'UTC') AS auth_time
 FROM
     {{ source('default', 'auth_events') }}

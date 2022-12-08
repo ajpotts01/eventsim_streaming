@@ -1,20 +1,20 @@
 SELECT
     ts,
-    sessionid,
+    sessionId,
     auth,
     level,
-    iteminsession,
+    itemInSession,
     city,
     zip,
     state,
-    useragent,
+    userAgent,
     lon,
     lat,
-    userid,
-    lastname,
-    firstname,
+    userId,
+    lastName,
+    firstName,
     gender,
     registration,
-    TOTIMEZONE(ts, 'UTC') AS status_change_time
+    toTimeZone(ts, 'UTC') AS status_change_time
 FROM
     {{ source('default', 'status_change_events') }}
