@@ -9,6 +9,7 @@ final as (
 
     select
         -- ids
+        CONCAT(RECORD_METADATA:"partition"::integer, '-', RECORD_METADATA:"offset"::integer, '-', RECORD_METADATA:"CreateTime"::integer) as auth_event_id,
         record_content:"userId"::NUMBER as user_id,
         record_content:"sessionId"::NUMBER as session_id,
 
