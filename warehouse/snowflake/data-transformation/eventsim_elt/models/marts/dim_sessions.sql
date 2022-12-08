@@ -28,12 +28,14 @@ dim_sessions as (
     from
         stg_page_view_events
     left join stg_listen_events
-        on stg_page_view_events.session_key = stg_listen_events.session_key
+        on stg_page_view_events.session_key
+            = stg_listen_events.session_key
     left join stg_status_change_events
-        on
-            stg_page_view_events.session_key = stg_status_change_events.session_key
+        on stg_page_view_events.session_key
+            = stg_status_change_events.session_key
     left join stg_auth_events
-        on stg_page_view_events.session_key = stg_auth_events.session_key
+        on stg_page_view_events.session_key
+            = stg_auth_events.session_key
 )
 
 select *

@@ -21,22 +21,24 @@ final as (
             record_metadata:"CreateTime"::INTEGER
         ) as auth_event_id,
         -- record_content:"userId"::NUMBER as user_id,
-{{ dbt_utils.generate_surrogate_key(['record_content:"firstName"', 'record_content:"lastName"']) }} as user_key,
-{{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
+{{ dbt_utils.generate_surrogate_key(['record_content:"firstName"', 
+                                    'record_content:"lastName"']) }} as user_key,
+{{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 
+                                    'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
         -- record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-        record_content:"city"::VARCHAR as city,
-        record_content:"firstName"::VARCHAR as first_name,
-        record_content:"lastName"::VARCHAR as last_name,
-        record_content:"gender"::VARCHAR as gender,
-        record_content:"itemInSession"::NUMBER as item_in_session,
-        record_content:"level"::VARCHAR as user_subscription_level,
-        record_content:"userAgent"::VARCHAR as user_agent,
-        record_content:"zip"::NUMBER as zip_number,
-        record_content:"state"::VARCHAR as state_of_residence,
-        record_content:"lat"::NUMBER as latitude,
-        record_content:"lon"::NUMBER as longitude,
+        record_content:"city"::VARCHAR as 'city',
+        record_content:"firstName"::VARCHAR as 'first_name',
+        record_content:"lastName"::VARCHAR as 'last_name',
+        record_content:"gender"::VARCHAR as 'gender',
+        record_content:"itemInSession"::NUMBER as 'item_in_session',
+        record_content:"level"::VARCHAR as 'user_subscription_level',
+        record_content:"userAgent"::VARCHAR as 'user_agent',
+        record_content:"zip"::NUMBER as 'zip_number',
+        record_content:"state"::VARCHAR as 'state_of_residence',
+        record_content:"lat"::NUMBER as 'latitude',
+        record_content:"lon"::NUMBER as 'longitude',
 
         -- date/times
         TO_TIMESTAMP_NTZ(

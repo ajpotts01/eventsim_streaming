@@ -35,23 +35,26 @@ obt_events as (
         stg_page_view_events.authentication_status,
         stg_page_view_events.http_method,
         case
-            when
-                stg_listen_events.topic_name = 'listen_events' then 'listen_event'
-            when stg_auth_events.topic_name = 'auth_events' then 'auth_event'
-            when
-                stg_page_view_events.topic_name = 'page_view_events' then 'page_view_event'
-            when
-                stg_status_change_events.topic_name = 'status_change_events' then 'status_change_event'
+            when stg_listen_events.topic_name = 'listen_events'
+                then 'listen_event'
+            when stg_auth_events.topic_name = 'auth_events'
+                then 'auth_event'
+            when stg_page_view_events.topic_name = 'page_view_events'
+                then 'page_view_event'
+            when stg_status_change_events.topic_name = 'status_change_events'
+                then 'status_change_event'
         end as event_type
     from
         stg_page_view_events
     left join stg_listen_events
-        on stg_page_view_events.session_key = stg_listen_events.session_key
+        on stg_page_view_events.session_key
+            = stg_listen_events.session_key
     left join stg_status_change_events
-        on
-            stg_page_view_events.session_key = stg_status_change_events.session_key
+        on stg_page_view_events.session_key
+            = stg_status_change_events.session_key
     left join stg_auth_events
-        on stg_page_view_events.session_key = stg_auth_events.session_key
+        on stg_page_view_events.session_key
+            = stg_auth_events.session_key
 )
 
 select *

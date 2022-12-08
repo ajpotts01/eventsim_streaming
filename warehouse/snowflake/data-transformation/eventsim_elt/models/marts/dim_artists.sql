@@ -8,7 +8,8 @@ stg_page_view_events as (
 
 dim_artists as (
     select
-{{ dbt_utils.generate_surrogate_key(['stg_listen_events.artist_name']) }} as artist_key,
+{{ dbt_utils.generate_surrogate_key(
+        ['stg_listen_events.artist_name']) }} as artist_key,
         stg_listen_events.artist_name,
         stg_listen_events.song_name
     from
