@@ -18,6 +18,6 @@ SELECT
     firstName,
     gender,
     registration,
-    toTimeZone(ts, 'UTC') AS listen_time
+    FROM_UNIXTIME(ts, 'UTC') AS listen_time
 FROM
     {{ source('default', 'listen_events') }}

@@ -15,6 +15,6 @@ SELECT
     firstName,
     gender,
     registration,
-    toTimeZone(ts, 'UTC') AS status_change_time
+    FROM_UNIXTIME(ts, 'UTC') AS status_change_time
 FROM
     {{ source('default', 'status_change_events') }}

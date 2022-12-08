@@ -17,6 +17,6 @@ SELECT
     artist,
     song,
     duration,
-    toTimeZone(ts, 'UTC') AS page_view_time
+    FROM_UNIXTIME(ts, 'UTC') AS page_view_time
 FROM
     {{ source('default', 'page_view_events') }}

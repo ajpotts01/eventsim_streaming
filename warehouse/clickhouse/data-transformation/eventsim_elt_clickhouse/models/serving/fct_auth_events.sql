@@ -15,6 +15,6 @@ SELECT
     gender,
     registration,
     success,
-    toTimeZone(ts, 'UTC') AS auth_time
+    FROM_UNIXTIME(ts, 'UTC') AS auth_time
 FROM
     {{ source('default', 'auth_events') }}
