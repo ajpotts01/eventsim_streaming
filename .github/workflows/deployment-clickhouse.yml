@@ -51,7 +51,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: warehouse/clickhouse/data-transformation/task-definition.preprod.json
-          container-name: eventsim-streaming-dbt-clickhouse
+          container-name: eventsim-streaming-dbt-clickhouse-preprod
           image: ${{ env.dev_ecr }}:${{ github.sha }}
           environment-variables: |
             TARGET=preprod
@@ -96,7 +96,7 @@ jobs:
             uses: aws-actions/amazon-ecs-render-task-definition@v1
             with:
               task-definition: warehouse/clickhouse/data-transformation/task-definition.prod.json
-              container-name: eventsim-streaming-dbt-clickhouse
+              container-name: eventsim-streaming-dbt-clickhouse-prod
               image: ${{ env.dev_ecr }}:${{ github.sha }}
               environment-variables: |
                 TARGET=prod
