@@ -5,8 +5,7 @@ COPY ./ .
 # Needed for bash in Alpine Linux
 RUN apk add --no-cache bash
 
-# There's no dbt-clickhouse docker image AFAIK
-RUN pip install -r requirements.txt
+RUN pip install dbt-core dbt-snowflake
 
 WORKDIR /eventsim_elt
 
