@@ -28,17 +28,17 @@ final as (
         -- record_content:"sessionId"::NUMBER as session_id,
 
         -- dimensions
-        record_content:"city"::VARCHAR as "city",
-        record_content:"firstName"::VARCHAR as "first_name",
-        record_content:"lastName"::VARCHAR as "last_name",
-        record_content:"gender"::VARCHAR as "gender",
-        record_content:"itemInSession"::NUMBER as "item_in_session",
-        record_content:"level"::VARCHAR as "user_subscription_level",
-        record_content:"userAgent"::VARCHAR as "user_agent",
-        record_content:"zip"::NUMBER as "zip_number",
-        record_content:"state"::VARCHAR as "state_of_residence",
-        record_content:"lat"::NUMBER as "latitude",
-        record_content:"lon"::NUMBER as "longitude",
+        record_content:"city"::VARCHAR as city,
+        record_content:"firstName"::VARCHAR as first_name,
+        record_content:"lastName"::VARCHAR as last_name,
+        record_content:"gender"::VARCHAR as gender,
+        record_content:"itemInSession"::NUMBER as item_in_session,
+        record_content:"level"::VARCHAR as user_subscription_level,
+        record_content:"userAgent"::VARCHAR as user_agent,
+        record_content:"zip"::NUMBER as zip_number,
+        record_content:"state"::VARCHAR as state_of_residence,
+        record_content:"lat"::NUMBER as latitude,
+        record_content:"lon"::NUMBER as longitude,
 
         -- date/times
         TO_TIMESTAMP_NTZ(
