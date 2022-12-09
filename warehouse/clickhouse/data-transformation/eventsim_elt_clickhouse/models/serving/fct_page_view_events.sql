@@ -1,5 +1,5 @@
 SELECT
-    ts,
+    toDateTime(ts / 1000) AS ts,
     sessionId,
     page,
     auth,

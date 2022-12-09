@@ -1,5 +1,5 @@
 SELECT
-    ts,
+    toDateTime(ts / 1000) AS ts,
     sessionId,
     level,
     itemInSession,
@@ -14,7 +14,6 @@ SELECT
     firstName,
     gender,
     registration,
-    success,
-    FROM_UNIXTIME(ts, 'UTC') AS auth_time
+    success
 FROM
     {{ source('default', 'auth_events') }}
