@@ -1,11 +1,6 @@
-FROM python:3.9.15-alpine
+FROM ghcr.io/dbt-labs/dbt-snowflake:1.3.latest
 
 COPY ./ .
-
-# Needed for bash in Alpine Linux
-RUN apk add --no-cache bash
-
-RUN pip install dbt-core dbt-snowflake
 
 WORKDIR /eventsim_elt
 
