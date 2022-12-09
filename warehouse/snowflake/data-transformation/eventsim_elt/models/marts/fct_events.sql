@@ -29,7 +29,7 @@ select
     stg_page_view_events.user_key,
 {{ dbt_utils.generate_surrogate_key(
         ['stg_page_view_events.page_view_id']) }} as page_view_key,
-        stg_page_view_events.session_key
+    stg_page_view_events.session_key
 from
     stg_page_view_events
 left join stg_listen_events
