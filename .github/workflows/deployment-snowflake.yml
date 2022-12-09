@@ -73,7 +73,7 @@ jobs:
       - name: Container - run task (dev/preprod)
         id: run_ecs
         run: |
-          task_arn=$(aws ecs run-task --task-definition eventsim-streaming-dbt-snowflake-preprod --cluster eventsim-streaming-ecs-dev | jq '.tasks[0].taskArn' --raw-output) 
+          task_arn=$(aws ecs run-task --task-definition eventsim-streaming-dbt-snowflake-dev --cluster eventsim-streaming-ecs-dev | jq '.tasks[0].taskArn' --raw-output) 
           echo $task_arn
           echo "::set-output name=task_arn::${task_arn}"
 
