@@ -1,5 +1,4 @@
 SELECT
-    toDateTime(ts / 1000) AS ts,
     sessionId,
     level,
     itemInSession,
@@ -14,6 +13,7 @@ SELECT
     firstName,
     gender,
     registration,
-    success
+    success,
+    toDateTime(ts / 1000) AS ts
 FROM
     {{ source('default', 'auth_events') }}
