@@ -45,7 +45,9 @@ jobs:
 
       # Run SQLFluff
       - name: SQL - Linting
-        run: sqlfluff lint warehouse/snowflake/data-transformation/eventsim_elt
+        run: |
+          cd warehouse/snowflake
+          sqlfluff lint ./data-transformation/eventsim_elt
 
       # Checkout to main so manifest can be created
       - name: Source code - checkout main

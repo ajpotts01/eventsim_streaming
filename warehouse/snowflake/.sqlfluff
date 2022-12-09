@@ -3,8 +3,8 @@ templater = dbt
 dialect = snowflake
 
 [sqlfluff:templater:dbt]
-project_dir = warehouse/snowflake/data-transformation/eventsim_elt
-profiles_dir = warehouse/snowflake/data-transformation/eventsim_elt
+project_dir = data-transformation/eventsim_elt
+profiles_dir = ddata-transformation/eventsim_elt
 profile = eventsim_elt
 target = ci
 
