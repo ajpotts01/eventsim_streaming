@@ -9,3 +9,5 @@ warehouse/snowflake/data-transformation/eventsim_elt/target/
 warehouse/snowflake/data-transformation/eventsim_elt/dbt_modules/
 warehouse/snowflake/data-transformation/eventsim_elt/logs/
 .venv/
+config.sh
+settings.json

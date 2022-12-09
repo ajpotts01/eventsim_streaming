@@ -12,6 +12,8 @@
         {%- else -%}
             preprod_{{ custom_schema_name | trim }}
         {%- endif -%}
+    {% elif target.name == "dev" %}
+            {{ env_var("DBT_PROFILE_SCHEMA") }}
     {% else %}
         {%- if custom_schema_name is none -%}
             {{ default_schema }}

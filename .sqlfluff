@@ -10,3 +10,6 @@ target = ci
 
 [sqlfluff:templater:jinja]
 apply_dbt_builtins = True
+
+[sqlfluff:rules:L029]
+ignore_words = first_name, last_name

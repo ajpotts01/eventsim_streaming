@@ -6,8 +6,8 @@ eventsim_elt:
       database: analytics_dev
       password: "{{ env_var('DBT_PROFILE_PASSWORD') }}"
       role: DBT_RW
-      schema: marts
       threads: 1
+      schema: "{{ env_var('DBT_PROFILE_SCHEMA') }}"
       type: snowflake
       user: dbt
       warehouse: ETL
@@ -32,4 +32,4 @@ eventsim_elt:
       threads: 1
       type: snowflake
       user: dbt
-      warehouse: ETL      
+      warehouse: ETL

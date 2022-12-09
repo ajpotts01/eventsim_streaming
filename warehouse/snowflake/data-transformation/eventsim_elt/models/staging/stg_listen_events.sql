@@ -8,16 +8,31 @@ with raw_source as (
 final as (
     -- same as auth + song column
     select
+        record_metadata:"topic"::VARCHAR as topic_name,
+
         -- ids
-        record_content:"userId"::NUMBER as user_id,
-        record_content:"sessionId"::NUMBER as session_id,
+        CONCAT(
+            record_metadata:"topic",
+            '-',
+            record_metadata:"partition"::INTEGER,
+            '-',
+            record_metadata:"offset"::INTEGER,
+            '-',
+            record_metadata:"CreateTime"::INTEGER
+        ) as listen_event_id,
+        -- record_content:"userId"::NUMBER as user_id,
+{{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 
+                                     'record_content:"lastName"::VARCHAR']) }} as user_key,
+        -- record_content:"sessionId"::NUMBER as session_id,
+{{ dbt_utils.generate_surrogate_key(['record_content:"session_id"', 
+                                     'record_content:"userAgent"', 'to_date(record_content:"ts")']) }} as session_key,
 
         -- dimensions
         record_content:"song"::VARCHAR as song_name,
         record_content:"artist"::VARCHAR as artist_name,
         record_content:"city"::VARCHAR as city,
-        record_content:"firstName"::VARCHAR as "first_name",
-        record_content:"lastName"::VARCHAR as "last_name",
+        record_content:"firstName"::VARCHAR as first_name,
+        record_content:"lastName"::VARCHAR as last_name,
         record_content:"gender"::VARCHAR as gender,
         record_content:"itemInSession"::NUMBER as item_in_session,
         record_content:"level"::VARCHAR as user_subscription_level,
