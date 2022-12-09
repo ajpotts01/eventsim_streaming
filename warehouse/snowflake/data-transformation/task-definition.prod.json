@@ -58,8 +58,8 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:860840224074:task-definition/eventsim-elt-snowflake-prod:1",
-  "family": "eventsim-elt-snowflake-prod",
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:860840224074:task-definition/eventsim-streaming-dbt-snowflake-prod:2",
+  "family": "eventsim-streaming-dbt-snowflake-prod",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -105,7 +105,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": "1024",
-  "revision": 1,
+  "revision": 2,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
