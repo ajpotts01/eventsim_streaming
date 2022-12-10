@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: fct_events
+    columns:
+      - name: event_type
+      - name: artist_key
+      - name: user_key
+      - name: page_view_key
+      - name: session_key

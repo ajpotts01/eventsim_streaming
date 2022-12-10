@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_dates
+    columns:
+      - name: date_day
+      - name: prior_date_day
+      - name: next_date_day
+      - name: prior_year_date_day
+      - name: prior_year_over_year_date_day
+      - name: day_of_week
+      - name: day_of_week_iso
+      - name: day_of_week_name
+      - name: day_of_week_name_short
+      - name: day_of_month
+      - name: day_of_year
+      - name: week_start_date
+      - name: week_end_date
+      - name: prior_year_week_start_date
+      - name: prior_year_week_end_date
+      - name: week_of_year
+      - name: iso_week_start_date
+      - name: iso_week_end_date
+      - name: prior_year_iso_week_start_date
+      - name: prior_year_iso_week_end_date
+      - name: iso_week_of_year
+      - name: prior_year_week_of_year
+      - name: prior_year_iso_week_of_year
+      - name: month_of_year
+      - name: month_name
+      - name: month_name_short
+      - name: month_start_date
+      - name: month_end_date
+      - name: prior_year_month_start_date
+      - name: prior_year_month_end_date
+      - name: quarter_of_year
+      - name: quarter_start_date
+      - name: quarter_end_date
+      - name: year_number
+      - name: year_start_date
+      - name: year_end_date

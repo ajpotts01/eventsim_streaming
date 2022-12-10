@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: dim_sessions
+    columns:
+      - name: session_key
+      - name: zip_number
+      - name: state_of_residence
+      - name: city
+      - name: latitude
+      - name: longitude
+      - name: user_agent
+      - name: item_in_session
+      - name: authentication_status

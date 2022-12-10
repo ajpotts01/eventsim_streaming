@@ -3,8 +3,10 @@ version: 2
 models:
   - name: stg_listen_events
     columns:
-      - name: user_id
-      - name: session_id
+      - name: topic_name
+      - name: listen_event_id
+      - name: user_key
+      - name: session_key
       - name: song_name
       - name: artist_name
       - name: city
@@ -22,4 +24,3 @@ models:
       - name: event_timestamp
       - name: user_registration_timestamp
       - name: ingestion_time
-      

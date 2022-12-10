@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: dim_artists
+    columns:
+      - name: artist_key
+      - name: artist_name
+      - name: song_name

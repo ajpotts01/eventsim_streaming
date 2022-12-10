@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: dim_users
+    columns:
+      - name: user_key
+      - name: first_name
+      - name: last_name
+      - name: gender
+      - name: user_subscription_level

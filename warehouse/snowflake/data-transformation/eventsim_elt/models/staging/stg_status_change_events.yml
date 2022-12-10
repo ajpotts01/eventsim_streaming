@@ -3,8 +3,16 @@ version: 2
 models:
   - name: stg_status_change_events
     columns:
-      - name: user_id
-      - name: session_id
+      - name: topic_name
+      - name: status_change_event_id
+      - name: user_key
+        tests:
+          - unique
+          - not_null
+      - name: session_key
+        tests:
+          - unique
+          - not_null
       - name: city
       - name: first_name
       - name: last_name
