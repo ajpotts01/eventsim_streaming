@@ -2,7 +2,6 @@ SELECT
     artist,
     song,
     duration,
-    ts,
     sessionId,
     auth,
     level,
@@ -18,6 +17,6 @@ SELECT
     firstName,
     gender,
     registration,
-    FROM_UNIXTIME(ts, 'UTC') AS listen_time
+    toDateTime(ts / 1000) AS ts
 FROM
     {{ source('default', 'listen_events') }}

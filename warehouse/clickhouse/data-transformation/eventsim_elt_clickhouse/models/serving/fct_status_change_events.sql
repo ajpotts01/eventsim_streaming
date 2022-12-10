@@ -1,5 +1,4 @@
 SELECT
-    ts,
     sessionId,
     auth,
     level,
@@ -15,6 +14,6 @@ SELECT
     firstName,
     gender,
     registration,
-    FROM_UNIXTIME(ts, 'UTC') AS status_change_time
+    toDateTime(ts / 1000) AS ts
 FROM
     {{ source('default', 'status_change_events') }}
