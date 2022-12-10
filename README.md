@@ -100,7 +100,7 @@ acks=all
 
 ### Streaming eventsim data into ClickHouse
 - [Sign up](https://clickhouse.com/) for a Clickhouse trial.
-- Create four tables in Clickhouse's `default` database:
+- Create four tables in Clickhouse's `default` database - the scripts to create these are in the warehouse/clickhouse/table-definitions folder:
     * `auth_events`
     * `listen_events`
     * `page_view_events`
