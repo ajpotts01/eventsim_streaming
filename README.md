@@ -4,6 +4,7 @@
 - [Source datasets](#source-datasets)
 - [Solution architecture](#solution-architecture)
 - [Codebase](#codebase)
+- [Getting started](#getting-started)
 
 Streaming analytics project with eventsim and Kafka
 
@@ -38,19 +39,44 @@ For a visualization of the end-to-end pipeline, see the architecture diagram abo
 
 ## Codebase
 
-#### application/eventsim
+### application/eventsim
 
 The `application/eventsim` folder contains the source data application code and the application Dockerfile.
 
-#### infrastructure
+### infrastructure
 
 The `infrastructure` folder contains relevant Terraform code to start up the application - WIP on hold for now.
 
-#### warehouse/clickhouse
+### warehouse/clickhouse
 
 The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each of the 4 Kafka streams defined as views and a Dockerfile for the dbt project image to run in ECS.
 
-#### warehouse/snowflake
+### warehouse/snowflake
 
 The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each of the 4 Kafka streams transformed into staging models, which are then transformed into dimension and fact tables, as well as a Dockerfile for the dbt project image to run in ECS.
+
+
+
+## Getting started
+
+### Streaming Kafka data from eventsim
+
+### Setting up Confluent
+
+- [Sign up](https://confluent.cloud/signup) for a free Confluent trial. 
+- Within Confluent, create an Environment with default settings. Make sure you enable [Schema Registry](https://docs.confluent.io/cloud/current/get-started/schema-registry.html#quick-start-for-schema-management-on-ccloud) in your environment to enable the Snowflake Kafka connector.
+- Within your Environment, create a Cluster.
+- Within the Cluster, go to Topics to set up the relevant topics.
+
+### Streaming eventsim data into Snowflake via Kafka connector
+
+- [Sign up](https://signup.snowflake.com/) for a free Snowflake trial. Make sure to create your trial account in the same region as your Confluent account.  Log into your Snowflake account. 
+- In order to create a Snowflake Sink Connector, within Snowflake, set up the necessary connection authentication key-pair, Snowflake database, schema, user role [per these instructions](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink.html).
+- Within Confluent, in your Cluster, go to Connectors, create a Snowflake Sink Connector, enabling streaming for the topics and fillng in the necessary credentials and settings to start streaming.
+
+### Streaming eventsim data into ClickHouse
+
+### Installing and running dbt
+
+Start up your virtual environment as necessary and [install dbt](https://docs.getdbt.com/docs/get-started/installation) via the command `pip install dbt-core` and then also install the [Snowflake](https://docs.getdbt.com/reference/warehouse-setups/snowflake-setup) and [ClickHouse](https://docs.getdbt.com/reference/warehouse-setups/clickhouse-setup) connectors (`pip install dbt-snowflake`, `pip install dbt-clickhouse`). 
 
