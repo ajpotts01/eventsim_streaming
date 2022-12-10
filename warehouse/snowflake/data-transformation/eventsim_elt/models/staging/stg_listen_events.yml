@@ -5,8 +5,15 @@ models:
     columns:
       - name: topic_name
       - name: listen_event_id
+        tests:
+          - unique
+          - not_null
       - name: user_key
+        tests:
+          - not_null
       - name: session_key
+        tests:
+          - not_null
       - name: song_name
       - name: artist_name
       - name: city

@@ -5,13 +5,14 @@ models:
     columns:
       - name: topic_name
       - name: status_change_event_id
-      - name: user_key
         tests:
           - unique
           - not_null
+      - name: user_key
+        tests:
+          - not_null
       - name: session_key
         tests:
-          - unique
           - not_null
       - name: city
       - name: first_name

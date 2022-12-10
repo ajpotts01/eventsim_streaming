@@ -10,11 +10,9 @@ models:
           - not_null
       - name: user_key
         tests:
-          - unique
           - not_null
       - name: session_key
         tests:
-          - unique
           - not_null
       - name: http_method
       - name: page_name
