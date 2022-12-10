@@ -60,13 +60,37 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 ## Getting started
 
 ### Streaming Kafka data from eventsim
+- A Dockerfile is provided to build eventsim to run as required
+- Add a configuration file to `application/eventsim/src/main/scala/io/confluent/eventsim/config` called `ccloud.properties`
+- This file must have the following schema:
+
+```
+# Required connection configs for Kafka producer, consumer, and admin
+bootstrap.servers=<CONFLUENT CLUSTER ADDRESS AND PORT>
+security.protocol=SASL_SSL
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='<CONFLUENT API USER NAME>' password='<CONFLUENT API KEY>';
+sasl.mechanism=PLAIN
+# Required for correctness in Apache Kafka clients prior to 2.6
+client.dns.lookup=use_all_dns_ips
+
+# Best practice for higher availability in Apache Kafka clients prior to 3.0
+session.timeout.ms=45000
+
+key.serializer=org.apache.kafka.common.serialization.ByteArraySerializer
+value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer
+
+# Best practice for Kafka producer to prevent data loss
+acks=all
+```
+
+- Build the Docker image. At the moment, the following command is used: `CMD ./bin/eventsim -c configs/Guitar-config.json --from 90 --nusers 20 -k 1`. This will simulate 90 prior days of data, with 20 fake users. Feel free to change these as required. Keep the -k parameter to publish to Confluent, or remove it to output to file only.
 
 ### Setting up Confluent
 
 - [Sign up](https://confluent.cloud/signup) for a free Confluent trial. 
 - Within Confluent, create an Environment with default settings. Make sure you enable [Schema Registry](https://docs.confluent.io/cloud/current/get-started/schema-registry.html#quick-start-for-schema-management-on-ccloud) in your environment to enable the Snowflake Kafka connector.
 - Within your Environment, create a Cluster.
-- Within the Cluster, go to Topics to set up the relevant topics.
+- Within the Cluster, go to Topics to set up the relevant topics - `auth_events`, `listen_events`, `page_view_events`, and `status_change_events`.
 
 ### Streaming eventsim data into Snowflake via Kafka connector
 
@@ -75,6 +99,22 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 - Within Confluent, in your Cluster, go to Connectors, create a Snowflake Sink Connector, enabling streaming for the topics and fillng in the necessary credentials and settings to start streaming.
 
 ### Streaming eventsim data into ClickHouse
+- [Sign up](https://clickhouse.com/) for a Clickhouse trial.
+- Create four tables in Clickhouse's `default` database:
+    * `auth_events`
+    * `listen_events`
+    * `page_view_events`
+    * `status_change_events`
+
+- Create four HTTP sinks in Confluent - one for each topic/table created in a previous step. These must have the following configuration:
+    * HTTP URL: `https://<YOUR CLICKHOUSE URL>:8443?query=INSERT%20INTO%20default.table_name%20FORMAT%20JSONEachRow` (where `table_name` = the topic you're sinking)
+    * Username: default
+    * Password: Your Clickhouse password
+    * Endpoint Authentication Type: BASIC
+    * Input Kafka record value format: JSON
+    * HTTP Headers: Content-Type: application/json
+    * Request Body Format: json
+    * Batch Max Size: 1000
 
 ### Installing and running dbt
 
