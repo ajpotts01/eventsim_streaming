@@ -1,6 +1,6 @@
 # eventsim Data Streaming Project
 
-## Table of Content 
+## Table of Contents
 - [Source datasets](#source-datasets)
 - [Solution architecture](#solution-architecture)
 - [Codebase](#codebase)
@@ -15,12 +15,12 @@ The streaming data is used to power operational use cases, whereas the batch dat
 ## Source datasets 
 
 
-[Eventsim](https://github.com/Interana/eventsim) - synthetic music streaming service data simulator written in Scala code. The original repo hasn't been maintained for 7+ years, so we based the project code on GitHub user [viirya's forked repo](https://github.com/viirya/eventsim) that updated the Scala code and relevant library dependencies to make the code work with more recent versions of Scala.
+[Eventsim](https://github.com/Interana/eventsim) - synthetic music streaming service data simulator written in Scala code. The original repo hasn't been maintained for 7+ years, so we based the project code on GitHub user [viirya's forked repo](https://github.com/viirya/eventsim) that updated the Scala code and relevant library dependencies to make the code work with more recent versions of Scala. We then extended this to work with Confluent in the cloud (rather hastily to meet project timelines - TBD making this proper extensions).
 
 
 ## Solution architecture
 
-TBD
+![images/architecture.png](images/architecture.png)
 
 Source: **Eventsim** - Scala application running in ECS container
 
@@ -32,7 +32,7 @@ Transformation: **dbt** projects for Snowflake and ClickHouse each, running in E
 
 CI/CD: **GitHub Actions** triggers CI/CD pipelines for both dbt projects. The linting tool SQLFluff is applied to SQL code during the CI process, flagging any issues in the code syntax. 
 
-Serving: **Preset** for dashboards. Retool as a data app if we have time.
+Serving: **Preset** for dashboards. **Retool** as a simple data app PoC. **Note:** Retool does not allow syncing code to existing repositories so is only available online.
 
 For a visualization of the end-to-end pipeline, see the architecture diagram above.
 
@@ -120,3 +120,17 @@ acks=all
 
 Start up your virtual environment as necessary and [install dbt](https://docs.getdbt.com/docs/get-started/installation) via the command `pip install dbt-core` and then also install the [Snowflake](https://docs.getdbt.com/reference/warehouse-setups/snowflake-setup) and [ClickHouse](https://docs.getdbt.com/reference/warehouse-setups/clickhouse-setup) connectors (`pip install dbt-snowflake`, `pip install dbt-clickhouse`). 
 
+### Deploying dbt
+
+There are task definitions in both Clickhouse and Snowflake dbt projects to allow automated deployment to an Amazon ECS cluster. These tasks must be created manually in ECS first, with the same names as defined in the prod and preprod task definitions.
+
+The following secrets must be set up to run the CI/CD pipelines properly:
+- `AWS_ACCESS_KEY`: Your AWS access key ID
+- `AWS_SECRET_KEY`: Your AWS secret key
+- `CH_HOST`: Clickhouse instance URL (not including port - this is configured in profiles.yml)
+- `CH_PASSWORD`: Clickhouse instance password
+- `DBT_PROFILE_SNOWFLAKE_ACCOUNT`: Snowflake instance URL
+- `DBT_PROFILE_USER`: `Snowflake account username
+- `DBT_PROFILE_PASSWORD`: Snowflake account password
+
+These are all injected into various environment variables etc. during the build and deploy process.
