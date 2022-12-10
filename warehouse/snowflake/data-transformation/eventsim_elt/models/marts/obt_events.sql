@@ -16,17 +16,6 @@ stg_status_change_events as (
 
 obt_events as (
     select
-        case
-            when stg_listen_events.topic_name = 'listen_events'
-                then 'listen_event'
-            when stg_auth_events.topic_name = 'auth_events'
-                then 'auth_event'
-            when stg_page_view_events.topic_name = 'page_view_events'
-                then 'page_view_event'
-            when stg_status_change_events.topic_name = 'status_change_events'
-                then 'status_change_event'
-        end as event_type,
-        to_date(stg_page_view_events.event_timestamp) as event_date,
         stg_page_view_events.user_key,
         stg_page_view_events.session_key,
         stg_page_view_events.song_name,
@@ -44,7 +33,18 @@ obt_events as (
         stg_page_view_events.latitude,
         stg_page_view_events.longitude,
         stg_page_view_events.authentication_status,
-        stg_page_view_events.http_method
+        stg_page_view_events.http_method,
+        case
+            when stg_listen_events.topic_name = 'listen_events'
+                then 'listen_event'
+            when stg_auth_events.topic_name = 'auth_events'
+                then 'auth_event'
+            when stg_page_view_events.topic_name = 'page_view_events'
+                then 'page_view_event'
+            when stg_status_change_events.topic_name = 'status_change_events'
+                then 'status_change_event'
+        end as event_type,
+        to_date(stg_page_view_events.event_timestamp) as event_date
     from
         stg_page_view_events
     left join stg_listen_events
