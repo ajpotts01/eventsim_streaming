@@ -61,7 +61,7 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 
 ### Streaming Kafka data from eventsim
 - A Dockerfile is provided to build eventsim to run as required
-- Add a file for storing environment variables. We recommend doing this in the application/eventsim folder for local development
+- Add a file for storing environment variables. We recommend doing this in the `application/eventsim` folder for local development
 - This file must have the following schema:
 
 ```
