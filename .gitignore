@@ -11,3 +11,4 @@ warehouse/snowflake/data-transformation/eventsim_elt/logs/
 .venv/
 config.sh
 settings.json
+.env

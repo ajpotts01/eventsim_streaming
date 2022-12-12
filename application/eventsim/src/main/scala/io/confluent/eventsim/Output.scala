@@ -35,21 +35,17 @@ object Output {
   private class KafkaEventWriter(val constructor: events.Constructor, val topic: String, val brokers: String) extends Object with canwrite {
 
     val props = new Properties()
-    //props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
-    //props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
-    //if (constructor.isInstanceOf[JSONConstructor]) "org.apache.kafka.common.serialization.ByteArraySerializer"
-    //else "io.confluent.kafka.serializers.KafkaAvroSerializer")
-    //props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers)
-
-    // Dodgy way to do this - just load file directly here
-    println("Reading file")
-    val inputStream = new FileInputStream("/eventsim/src/main/scala/io/confluent/eventsim/config/ccloud.properties")
 
     println("Loading props")
-    props.load(inputStream)
-
-    println("Closing stream")
-    inputStream.close()
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, sys.env("BOOTSTRAP_SERVERS"))
+    props.put("security.protocol", sys.env("SECURITY_PROTOCOL")) // unsure why this isn't a ProducerConfig constant
+    props.put("sasl.jaas.config", sys.env("SASL_JAAS_CONFIG"))
+    props.put("sasl.mechanism", sys.env("SASL_MECHANISM"))
+    props.put(ProducerConfig.CLIENT_DNS_LOOKUP_CONFIG, sys.env("CLIENT_DNS_LOOKUP"))
+    props.put("session.timeout.ms", sys.env("SESSION_TIMEOUT_MS"))
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, sys.env("KEY_SERIALIZER"))
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, sys.env("VALUE_SERIALIZER"))
+    props.put(ProducerConfig.ACKS_CONFIG, sys.env("ACKS"))
     
     val producer = new KafkaProducer[Object, Object](props)
 
