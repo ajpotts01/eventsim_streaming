@@ -50,7 +50,7 @@ object Output {
     val producer = new KafkaProducer[Object, Object](props)
 
     def write() = {
-      println("Writing")
+      //println("Writing")
       val value =
         constructor match {
           case constructor1: events.AvroConstructor[Object] => constructor1.serialize(constructor.end())

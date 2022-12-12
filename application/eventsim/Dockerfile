@@ -34,4 +34,4 @@ RUN sed -i -e 's/\r$//' bin/eventsim
 # Use this in combination with docker run -it container_name:tag to debug things
 #CMD [ "/bin/bash" ]
 # Dev params - this will be changed later to add an actual confluent config
-CMD ./bin/eventsim -c configs/Guitar-config.json --from 90 --nusers 20 -k 1
+CMD ./bin/eventsim -c configs/Guitar-config.json --continuous --from 7 --nusers 1000 -k 1
