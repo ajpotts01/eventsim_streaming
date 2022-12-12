@@ -61,29 +61,41 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 
 ### Streaming Kafka data from eventsim
 - A Dockerfile is provided to build eventsim to run as required
-- Add a configuration file to `application/eventsim/src/main/scala/io/confluent/eventsim/config` called `ccloud.properties`
+- Create an environment variables file (we called it .env, and save it in `application/eventsim` before building the Docker image.
 - This file must have the following schema:
 
 ```
 # Required connection configs for Kafka producer, consumer, and admin
-bootstrap.servers=<CONFLUENT CLUSTER ADDRESS AND PORT>
-security.protocol=SASL_SSL
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='<CONFLUENT API USER NAME>' password='<CONFLUENT API KEY>';
-sasl.mechanism=PLAIN
+ # bootstrap.servers
+BOOTSTRAP_SERVERS=pkc-ldvj1.ap-southeast-2.aws.confluent.cloud:9092
+# security.protocol
+SECURITY_PROTOCOL=SASL_SSL
+# sasl.jaas.config
+SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='XJVSWX46H3NEW26E' password='E9ki65fz4wslVbmNwnOQ8nuuIY9JdxAElos5B6cKVEYanZHM+PqH7bbVyBAr8+Sx';
+# sasl.mechanism
+SASL_MECHANISM=PLAIN
+
 # Required for correctness in Apache Kafka clients prior to 2.6
-client.dns.lookup=use_all_dns_ips
+# client.dns.lookup
+CLIENT_DNS_LOOKUP=use_all_dns_ips
 
 # Best practice for higher availability in Apache Kafka clients prior to 3.0
-session.timeout.ms=45000
+# session.timeout.ms
+SESSION_TIMEOUT_MS=45000
 
-key.serializer=org.apache.kafka.common.serialization.ByteArraySerializer
-value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer
+# key.serializer
+KEY_SERIALIZER=org.apache.kafka.common.serialization.ByteArraySerializer
+# value.serializer
+VALUE_SERIALIZER=org.apache.kafka.common.serialization.ByteArraySerializer
 
 # Best practice for Kafka producer to prevent data loss
-acks=all
+# acks
+ACKS=all
 ```
 
 - Build the Docker image. At the moment, the following command is used: `CMD ./bin/eventsim -c configs/Guitar-config.json --from 90 --nusers 20 -k 1`. This will simulate 90 prior days of data, with 20 fake users. Feel free to change these as required. Keep the -k parameter to publish to Confluent, or remove it to output to file only.
+
+- To run eventsim locally, use `docker run --env-file=.env -t <IMAGE NAME>:<IMAGE TAG>` from `application/eventsim`.
 
 ### Setting up Confluent
 
