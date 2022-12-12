@@ -41,7 +41,7 @@ For a visualization of the end-to-end pipeline, see the architecture diagram abo
 
 ### application/eventsim
 
-The `application/eventsim` folder contains the source data application code and the application Dockerfile.
+The `application/eventsim` folder contains the source data application code, the application Dockerfile, and the schemas for Confluent (if you wish to use them).
 
 ### infrastructure
 
@@ -61,12 +61,12 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 
 ### Streaming Kafka data from eventsim
 - A Dockerfile is provided to build eventsim to run as required
-- Add a configuration file to `application/eventsim/src/main/scala/io/confluent/eventsim/config` called `ccloud.properties`
+- Add a file for storing environment variables. We recommend doing this in the application/eventsim folder for local development
 - This file must have the following schema:
 
 ```
 # Required connection configs for Kafka producer, consumer, and admin
- # bootstrap.servers
+# bootstrap.servers
 BOOTSTRAP_SERVERS=<YOUR CONFLUENT URL AND PORT>
 # security.protocol
 SECURITY_PROTOCOL=SASL_SSL
@@ -89,6 +89,7 @@ acks=all
 ```
 
 - Build the Docker image. At the moment, the following command is used: `CMD ./bin/eventsim -c configs/Guitar-config.json --from 90 --nusers 20 -k 1`. This will simulate 90 prior days of data, with 20 fake users. Feel free to change these as required. Keep the -k parameter to publish to Confluent, or remove it to output to file only.
+- If running locally, use `docker run --env-file=.env -t <YOUR IMAGE TAG>` to include environment variables
 
 ### Setting up Confluent
 
