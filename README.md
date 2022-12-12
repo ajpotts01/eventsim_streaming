@@ -67,11 +67,11 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 ```
 # Required connection configs for Kafka producer, consumer, and admin
  # bootstrap.servers
-BOOTSTRAP_SERVERS=pkc-ldvj1.ap-southeast-2.aws.confluent.cloud:9092
+BOOTSTRAP_SERVERS=<YOUR CONFLUENT URL AND PORT>
 # security.protocol
 SECURITY_PROTOCOL=SASL_SSL
 # sasl.jaas.config
-SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='XJVSWX46H3NEW26E' password='E9ki65fz4wslVbmNwnOQ8nuuIY9JdxAElos5B6cKVEYanZHM+PqH7bbVyBAr8+Sx';
+SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='<YOUR CONFLUENT API ID>' password=<YOUR CONFLUENT API KEY>;
 # sasl.mechanism
 SASL_MECHANISM=PLAIN
 
