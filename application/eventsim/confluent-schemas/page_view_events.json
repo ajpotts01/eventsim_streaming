@@ -1,0 +1,102 @@
+{
+    "$id": "http://example.com/myURI.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "description": "Describing page view events.",
+    "properties": {
+      "artist": {
+        "description": "Artist for this song.",
+        "type": "string"
+      },
+      "auth": {
+        "description": "Whether user was logged in or not.",
+        "type": "string"
+      },
+      "city": {
+        "description": "User's city.",
+        "type": "string"
+      },
+      "duration": {
+        "description": "Song duration (seconds).",
+        "type": "number"
+      },
+      "firstName": {
+        "description": "User's first name.",
+        "type": "string"
+      },
+      "gender": {
+        "description": "User's gender.",
+        "type": "string"
+      },
+      "itemInSession": {
+        "description": "Sequence number for action(s) performed.",
+        "type": "integer"
+      },
+      "lastName": {
+        "description": "User's surname.",
+        "type": "string"
+      },
+      "lat": {
+        "description": "Latitude of user's location.",
+        "type": "number"
+      },
+      "level": {
+        "description": "Type of user (paid/free).",
+        "type": "string"
+      },
+      "lon": {
+        "description": "Longitude of user's location.",
+        "type": "number"
+      },
+      "method": {
+        "description": "How the user accessed this page.",
+        "type": "string"
+      },
+      "page": {
+        "description": "Page the user was on.",
+        "type": "string"
+      },
+      "registration": {
+        "description": "Timestamp of user registration time.",
+        "type": "integer"
+      },
+      "sessionId": {
+        "description": "Session ID for this user.",
+        "type": "integer"
+      },
+      "song": {
+        "description": "Song played.",
+        "type": "string"
+      },
+      "state": {
+        "description": "User's state.",
+        "type": "string"
+      },
+      "status": {
+        "description": "Page status.",
+        "type": "integer"
+      },
+      "success": {
+        "description": "Whether this action was successful or not.",
+        "type": "boolean"
+      },
+      "ts": {
+        "description": "Timestamp (Unix epoch time).",
+        "type": "integer"
+      },
+      "userAgent": {
+        "description": "User agent (e.g. browser type).",
+        "type": "string"
+      },
+      "userId": {
+        "description": "Unique user ID.",
+        "type": "integer"
+      },
+      "zip": {
+        "description": "User's zip code.",
+        "type": "string"
+      }
+    },
+    "title": "Listen Events",
+    "type": "object"
+  }

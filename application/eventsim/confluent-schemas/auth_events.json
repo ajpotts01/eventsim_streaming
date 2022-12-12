@@ -1,0 +1,74 @@
+{
+    "$id": "http://example.com/myURI.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "description": "Describing authorization events (e.g. logins)",
+    "properties": {
+      "city": {
+        "description": "User's city.",
+        "type": "string"
+      },
+      "firstName": {
+        "description": "User's first name.",
+        "type": "string"
+      },
+      "gender": {
+        "description": "User's gender.",
+        "type": "string"
+      },
+      "itemInSession": {
+        "description": "Sequence number for action(s) performed.",
+        "type": "integer"
+      },
+      "lastName": {
+        "description": "User's surname.",
+        "type": "string"
+      },
+      "lat": {
+        "description": "Latitude of user's location.",
+        "type": "number"
+      },
+      "level": {
+        "description": "Type of user (paid/free).",
+        "type": "string"
+      },
+      "lon": {
+        "description": "Longitude of user's location.",
+        "type": "number"
+      },
+      "registration": {
+        "description": "Timestamp of user registration time.",
+        "type": "integer"
+      },
+      "sessionId": {
+        "description": "Session ID for this user.",
+        "type": "integer"
+      },
+      "state": {
+        "description": "User's state.",
+        "type": "string"
+      },
+      "success": {
+        "description": "Whether this action was successful or not.",
+        "type": "boolean"
+      },
+      "ts": {
+        "description": "Timestamp (Unix epoch time).",
+        "type": "integer"
+      },
+      "userAgent": {
+        "description": "User agent (e.g. browser type).",
+        "type": "string"
+      },
+      "userId": {
+        "description": "Unique user ID.",
+        "type": "integer"
+      },
+      "zip": {
+        "description": "User's zip code.",
+        "type": "string"
+      }
+    },
+    "title": "Auth Events",
+    "type": "object"
+  }
