@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_page_view_events
+    columns:
+        - name: sessionId
+        - name: page
+        - name: auth
+        - name: method
+        - name: status
+        - name: level
+        - name: itemInSession
+        - name: city
+        - name: zip
+        - name: state
+        - name: userAgent
+        - name: userId
+          tests:
+            - not_null        
+        - name: lon
+        - name: lat
+        - name: artist
+        - name: song
+        - name: duration
+        - name: ts
+          tests:
+            - not_null

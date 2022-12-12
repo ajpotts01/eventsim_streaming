@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_auth_events
+    columns:
+        - name: sessionId
+        - name: level
+        - name: itemInSession
+        - name: city
+        - name: zip
+        - name: state
+        - name: userAgent
+        - name: lon
+        - name: lat
+        - name: userId
+          tests:
+            - not_null
+        - name: lastName
+        - name: firstName
+        - name: gender
+        - name: registration
+        - name: success
+        - name: ts
+          tests:
+            - not_null
