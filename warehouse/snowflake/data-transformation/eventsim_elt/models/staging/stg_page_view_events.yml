@@ -3,12 +3,17 @@ version: 2
 models:
   - name: stg_page_view_events
     columns:
+      - name: topic_name
       - name: page_view_id
         tests:
           - unique
           - not_null
-      - name: user_id
-      - name: session_id
+      - name: user_key
+        tests:
+          - not_null
+      - name: session_key
+        tests:
+          - not_null
       - name: http_method
       - name: page_name
       - name: song_name

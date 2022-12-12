@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: dim_page_views
+    columns:
+      - name: page_view_key
+      - name: page_view_id
+      - name: page_name
+      - name: http_method

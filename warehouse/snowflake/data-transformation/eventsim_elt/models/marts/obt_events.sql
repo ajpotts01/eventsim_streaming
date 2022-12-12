@@ -43,7 +43,8 @@ obt_events as (
                 then 'page_view_event'
             when stg_status_change_events.topic_name = 'status_change_events'
                 then 'status_change_event'
-        end as event_type
+        end as event_type,
+        to_date(stg_page_view_events.event_timestamp) as event_date
     from
         stg_page_view_events
     left join stg_listen_events

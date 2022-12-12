@@ -1,21 +1,18 @@
 version: 2
 
 models:
-  - name: stg_listen_events
+  - name: obt_events
     columns:
-      - name: topic_name
-      - name: listen_event_id
+      - name: event_type
         tests:
-          - unique
-          - not_null
+          - accepted_values:
+              values: ['listen_event', 'auth_event', 'page_view_event', 'status_change_event']
+      - name: event_date
       - name: user_key
-        tests:
-          - not_null
       - name: session_key
-        tests:
-          - not_null
       - name: song_name
       - name: artist_name
+      - name: page_name
       - name: city
       - name: first_name
       - name: last_name
@@ -28,6 +25,4 @@ models:
       - name: latitude
       - name: longitude
       - name: authentication_status
-      - name: event_timestamp
-      - name: user_registration_timestamp
-      - name: ingestion_time
+      - name: http_method
