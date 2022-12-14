@@ -6,16 +6,26 @@
 - [Codebase](#codebase)
 - [Getting started](#getting-started)
 
-Streaming analytics project with eventsim and Kafka
+This data engineering project involves pulling data streams from a mock music streaming service event simulator into Confluent via Kafka, then passing those streams simultaneously to Snowflake and ClickHouse (each modelled by CI/CD-powered dbt projects) and then visualizing them in Preset. The ClickHouse data is also populated into the custom app tool Retool to create a data app POC.
 
-This engineering project involves pulling data streams from a mock music streaming service event simulator into Confluent via Kafka, then passing those streams simultaneously to Snowflake and ClickHouse (each modelled by CI/CD-powered dbt projects) and then visualizing them in Preset.
+The Snowflake batch data served in Preset is modelled into facts and dims as well as a One Big Table to enable sophisticated BI dashboards. 
 
-The streaming data is used to power operational use cases, whereas the batch data is modelled into facts and dims as well as an OBT to power up more sophisticated BI dashboards. 
-
-## Source datasets 
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-batch.png" width="763" height="388" alt="Snowflake dashboard" class="center"></p>
 
 
-[Eventsim](https://github.com/Interana/eventsim) - synthetic music streaming service data simulator written in Scala code. The original repo hasn't been maintained for 7+ years, so we based the project code on GitHub user [viirya's forked repo](https://github.com/viirya/eventsim) that updated the Scala code and relevant library dependencies to make the code work with more recent versions of Scala. We then extended this to work with Confluent in the cloud (rather hastily to meet project timelines - TBD making this proper extensions).
+The ClickHouse data streaming into Preset is used to power real-time operational analytics use cases. 
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-live.png" width="760" height="388"></p>
+
+The ClickHouse data streaming into Retool is used to create an interactive data app, allowing navigation across points of interest in the streamed data.
+
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/retool-poc-app.png" width="768" height="403"></p>
+
+
+
+## Source dataset
+
+
+[Eventsim](https://github.com/Interana/eventsim) - synthetic music streaming service data simulator written in Scala code. The original repo hasn't been maintained for 7+ years, so we based the project code on GitHub user [viirya's forked repo](https://github.com/viirya/eventsim) that updated the Scala code and relevant library dependencies to make the code work with more recent versions of Scala. We then extended this to work with Confluent in the cloud (rather hastily to meet project timelines - TBD making this into a proper extension).
 
 
 ## Solution architecture
@@ -32,9 +42,10 @@ Transformation: **dbt** projects for Snowflake and ClickHouse each, running in E
 
 CI/CD: **GitHub Actions** triggers CI/CD pipelines for both dbt projects. The linting tool SQLFluff is applied to SQL code during the CI process, flagging any issues in the code syntax. 
 
-Serving: **Preset** for dashboards. **Retool** as a simple data app PoC. **Note:** Retool does not allow syncing code to existing repositories so is only available online.
+Serving: **Preset** for dashboards. **Retool*** as a simple data app PoC. 
 
-For a visualization of the end-to-end pipeline, see the architecture diagram above.
+***Note:** Retool does not allow syncing code to existing repositories so is only available online.
+
 
 
 ## Codebase
@@ -64,7 +75,7 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 - Add a file for storing environment variables. We recommend doing this in the `application/eventsim` folder for local development
 - This file must have the following schema:
 
-```
+```bash
 # Required connection configs for Kafka producer, consumer, and admin
 # bootstrap.servers
 BOOTSTRAP_SERVERS=<YOUR CONFLUENT URL AND PORT>
