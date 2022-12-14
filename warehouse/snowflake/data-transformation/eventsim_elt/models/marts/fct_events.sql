@@ -12,8 +12,9 @@ stg_page_view_events as (
 
 stg_status_change_events as (
     select * from {{ ref('stg_status_change_events') }}
-)
+),
 
+fct_events as (
 select
     case when stg_listen_events.topic_name = 'listen_events'
         then 'listen_event'
@@ -38,3 +39,7 @@ left join stg_status_change_events
     on stg_page_view_events.session_key = stg_status_change_events.session_key
 left join stg_auth_events
     on stg_page_view_events.session_key = stg_auth_events.session_key
+)
+
+select *
+from fct_events

@@ -14,22 +14,21 @@ stg_status_change_events as (
     select * from {{ ref('stg_status_change_events') }}
 ),
 
-dim_sessions as (
-    select
-        stg_sessions.session_key,
-        stg_sessions.state_of_residence
+fct_sessions as (
+select
+    {{ dbt_utils.generate_surrogate_key
+    (['stg_listen_events.artist_name']) }} as artist_key,
+        stg_sessions.user_key,
+        stg_sessions.session_key
     from
         stg_sessions
     left join stg_listen_events
-        on stg_sessions.session_key
-            = stg_listen_events.session_key
+        on stg_sessions.session_key = stg_listen_events.session_key
     left join stg_status_change_events
-        on stg_sessions.session_key
-            = stg_status_change_events.session_key
+        on stg_sessions.session_key = stg_status_change_events.session_key
     left join stg_auth_events
-        on stg_sessions.session_key
-            = stg_auth_events.session_key
+        on stg_sessions.session_key = stg_auth_events.session_key
 )
 
 select *
-from dim_sessions
+from fct_sessions
