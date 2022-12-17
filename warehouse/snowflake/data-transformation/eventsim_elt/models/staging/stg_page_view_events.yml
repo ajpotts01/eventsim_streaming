@@ -4,7 +4,7 @@ models:
   - name: stg_page_view_events
     columns:
       - name: topic_name
-      - name: page_view_id
+      - name: event_id
         tests:
           - unique
           - not_null
