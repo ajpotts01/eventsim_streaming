@@ -32,7 +32,8 @@ final as (
         record_content:"page"::VARCHAR as page_name,
         record_content:"song"::VARCHAR as song_name,
         record_content:"artist"::VARCHAR as artist_name,
-        {{ dbt_utils.generate_surrogate_key(['record_content:"artist"']) }} as artist_key,
+{{ dbt_utils.generate_surrogate_key(['record_content:"artist"']) }}
+        as artist_key,
         record_content:"city"::VARCHAR as city,
         record_content:"firstName"::VARCHAR as first_name,
         record_content:"lastName"::VARCHAR as last_name,

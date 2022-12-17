@@ -16,7 +16,7 @@ stg_status_change_events as (
 
 
 sessions_joined as (
-    select 
+    select
         stg_page_view_events.event_id,
         stg_page_view_events.topic_name,
         stg_page_view_events.http_method,
@@ -48,24 +48,27 @@ sessions_joined as (
 
         -- metadata
         stg_page_view_events.ingestion_time
-    from    
+    from
         stg_page_view_events
     left join stg_listen_events
-        on stg_page_view_events.session_key = stg_listen_events.session_key
+        on stg_page_view_events.session_key
+            = stg_listen_events.session_key
     left join stg_status_change_events
-        on stg_page_view_events.session_key = stg_status_change_events.session_key
+        on stg_page_view_events.session_key
+            = stg_status_change_events.session_key
     left join stg_auth_events
-        on stg_page_view_events.session_key = stg_auth_events.session_key
+        on stg_page_view_events.session_key
+            = stg_auth_events.session_key
 ),
 
 
 
 sessions_deduped as (
-    select 
+    select
         *,
         row_number() over (partition by session_key
-        order by event_id asc) as session_key_rank
-    from    
+            order by event_id asc) as session_key_rank
+    from
         sessions_joined
 ),
 

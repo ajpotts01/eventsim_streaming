@@ -24,7 +24,8 @@ obt_sessions as (
         stg_sessions.http_method,
         to_date(stg_sessions.event_timestamp) as session_date
     from
-        stg_sessions)
+        stg_sessions
+)
 
 select *
 from obt_sessions

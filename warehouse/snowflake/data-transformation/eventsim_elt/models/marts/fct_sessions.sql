@@ -3,7 +3,7 @@ with stg_sessions as (
 ),
 
 fct_sessions as (
-select
+    select
         stg_sessions.artist_key,
         stg_sessions.user_key,
         stg_sessions.session_key,
