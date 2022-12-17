@@ -19,7 +19,7 @@ final as (
             record_metadata:"offset"::INTEGER,
             '-',
             record_metadata:"CreateTime"::INTEGER
-        ) as auth_event_id,
+        ) as event_id,
         -- record_content:"userId"::NUMBER as user_id,
 {{ dbt_utils.generate_surrogate_key(['record_content:"firstName"', 
                                     'record_content:"lastName"']) }} as user_key,
