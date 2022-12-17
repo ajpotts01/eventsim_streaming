@@ -4,10 +4,10 @@ with stg_sessions as (
 
 fct_sessions as (
     select
-        stg_sessions.artist_key,
-        stg_sessions.user_key,
-        stg_sessions.session_key,
-        to_date(stg_sessions.event_timestamp) as session_date
+        artist_key,
+        user_key,
+        session_key,
+        to_date(event_timestamp) as session_date
     from
         stg_sessions
 )
