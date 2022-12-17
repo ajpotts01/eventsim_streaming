@@ -1,9 +1,11 @@
 version: 2
 
 models:
-  - name: dim_sessions
+  - name: obt_sessions
     columns:
+      - name: user_key
       - name: session_key
+      - name: artist_name
       - name: song_name
       - name: page_name
       - name: city
@@ -19,3 +21,4 @@ models:
       - name: longitude
       - name: authentication_status
       - name: http_method
+      - name: session_date
