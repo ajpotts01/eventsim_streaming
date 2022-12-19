@@ -19,7 +19,7 @@ final as (
             record_metadata:"offset"::INTEGER,
             '-',
             record_metadata:"CreateTime"::INTEGER
-        ) as listen_event_id,
+        ) as event_id,
         -- record_content:"userId"::NUMBER as user_id,
 {{ dbt_utils.generate_surrogate_key(['record_content:"firstName"::VARCHAR', 
                                      'record_content:"lastName"::VARCHAR']) }} as user_key,
@@ -30,6 +30,8 @@ final as (
         -- dimensions
         record_content:"song"::VARCHAR as song_name,
         record_content:"artist"::VARCHAR as artist_name,
+{{ dbt_utils.generate_surrogate_key(['record_content:"artist"']) }}
+        as artist_key,
         record_content:"city"::VARCHAR as city,
         record_content:"firstName"::VARCHAR as first_name,
         record_content:"lastName"::VARCHAR as last_name,

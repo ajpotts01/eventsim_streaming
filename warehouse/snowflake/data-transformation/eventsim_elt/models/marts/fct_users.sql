@@ -2,16 +2,15 @@ with stg_users as (
     select * from {{ ref('stg_users') }}
 ),
 
-dim_users as (
+fct_users as (
     select
         user_key,
-        first_name,
-        last_name,
-        gender,
-        user_subscription_level
+        session_key,
+        artist_key,
+        to_date(event_timestamp) as session_date
     from
         stg_users
 )
 
 select *
-from dim_users
+from fct_users

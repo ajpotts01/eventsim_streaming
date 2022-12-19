@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: fct_users
+    columns:
+      - name: user_key
+      - name: session_key
+      - name: artist_key
+      - name: session_date

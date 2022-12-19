@@ -4,11 +4,18 @@ models:
   - name: dim_sessions
     columns:
       - name: session_key
+      - name: song_name
+      - name: page_name
+      - name: city
+      - name: first_name
+      - name: last_name
+      - name: gender
+      - name: item_in_session
+      - name: user_subscription_level
+      - name: user_agent
       - name: zip_number
       - name: state_of_residence
-      - name: city
       - name: latitude
       - name: longitude
-      - name: user_agent
-      - name: item_in_session
       - name: authentication_status
+      - name: http_method

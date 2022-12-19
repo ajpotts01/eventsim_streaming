@@ -1,10 +1,9 @@
 version: 2
 
 models:
-  - name: fct_events
+  - name: fct_sessions
     columns:
-      - name: event_type
       - name: artist_key
       - name: user_key
-      - name: event_key
       - name: session_key
+      - name: session_date

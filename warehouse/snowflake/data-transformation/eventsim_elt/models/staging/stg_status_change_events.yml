@@ -4,7 +4,7 @@ models:
   - name: stg_status_change_events
     columns:
       - name: topic_name
-      - name: status_change_event_id
+      - name: event_id
         tests:
           - unique
           - not_null

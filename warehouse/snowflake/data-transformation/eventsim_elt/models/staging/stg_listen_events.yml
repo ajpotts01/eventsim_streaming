@@ -4,7 +4,7 @@ models:
   - name: stg_listen_events
     columns:
       - name: topic_name
-      - name: listen_event_id
+      - name: event_id
         tests:
           - unique
           - not_null
