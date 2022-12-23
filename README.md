@@ -3,6 +3,7 @@
 ## Table of Contents
 - [Source datasets](#source-datasets)
 - [Solution architecture](#solution-architecture)
+- [Transformation](#transformation)
 - [Codebase](#codebase)
 - [Getting started](#getting-started)
 
@@ -10,23 +11,24 @@ This data engineering project involves pulling data streams from a mock music st
 
 The Snowflake batch data served in Preset is modelled into facts and dims as well as a One Big Table to enable sophisticated BI dashboards. 
 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-batch.png" width="763" height="388" alt="Snowflake dashboard" class="center"></p>
-
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-batch.png" width="500" height="254" alt="Snowflake dashboard" class="center"><br>
+<em>Preset Snowflake dashboard</em></p>
 
 The ClickHouse data streaming into Preset is used to power real-time operational analytics use cases. 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-live.png" width="760" height="388"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-live.png" width="498" height="254"><br><em>Preset ClickHouse real-time dashboard</em></p>
 
 The ClickHouse data streaming into Retool is used to create an interactive data app, allowing navigation across points of interest in the streamed data.
 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/retool-poc-app.png" width="768" height="403"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/retool-poc-app.png" width="500" height="262"><br><em>Retool ClickHouse data app</em></p>
 
-
+<br/>
 
 ## Source dataset
 
 
 [Eventsim](https://github.com/Interana/eventsim) - synthetic music streaming service data simulator written in Scala code. The original repo hasn't been maintained for 7+ years, so we based the project code on GitHub user [viirya's forked repo](https://github.com/viirya/eventsim) that updated the Scala code and relevant library dependencies to make the code work with more recent versions of Scala. We then extended this to work with Confluent in the cloud (rather hastily to meet project timelines - TBD making this into a proper extension).
 
+<br/>
 
 ## Solution architecture
 
@@ -46,7 +48,20 @@ Serving: **Preset** for dashboards. **Retool*** as a simple data app PoC.
 
 ***Note:** Retool does not allow syncing code to existing repositories so is only available online.
 
+<br/>
 
+## Transformation
+
+There's dbt projects for Snowflake and ClickHouse each. 
+
+For Snowflake, each of the 4 Kafka streams is transformed into staging models, which are then transformed into dimension and fact tables as well as event and session-scoped OBTs.
+
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/snowflake-dbt-model-lineage-graph.png" width="800" height="393"><br><em>Snowflake dbt models lineage graph</em></p>
+
+
+For ClickHouse, since the data is streaming from Kafka real-time, the dbt model is used to create a view per each stream.
+
+<br/>
 
 ## Codebase
 
@@ -64,9 +79,10 @@ The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each 
 
 ### warehouse/snowflake
 
-The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each of the 4 Kafka streams transformed into staging models, which are then transformed into dimension and fact tables, as well as a Dockerfile for the dbt project image to run in ECS.
+The `warehouse/clickhouse` folder contains the ClickHouse dbt project with each of the 4 Kafka streams transformed into staging models, dimension and fact tables and OBTs, as well as a Dockerfile for the dbt project image to run in ECS.
 
 
+<br/>
 
 ## Getting started
 
