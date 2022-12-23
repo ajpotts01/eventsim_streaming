@@ -10,16 +10,15 @@ This data engineering project involves pulling data streams from a mock music st
 
 The Snowflake batch data served in Preset is modelled into facts and dims as well as a One Big Table to enable sophisticated BI dashboards. 
 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-batch.png" width="763" height="388" alt="Snowflake dashboard" class="center"></p>
-
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-batch.png" width="500" height="254" alt="Snowflake dashboard" class="center"><br>
+<em>Preset Snowflake dashboard</em></p>
 
 The ClickHouse data streaming into Preset is used to power real-time operational analytics use cases. 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-live.png" width="760" height="388"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/preset-dashboards-live.png" width="498" height="254"><br><em>Preset ClickHouse real-time dashboard</em></p>
 
 The ClickHouse data streaming into Retool is used to create an interactive data app, allowing navigation across points of interest in the streamed data.
 
-<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/retool-poc-app.png" width="768" height="403"></p>
-
+<p align="center"><img src="https://raw.githubusercontent.com/ajpotts01/eventsim_streaming/main/images/retool-poc-app.png" width="500" height="262"><br><em>Retool ClickHouse data app</em></p>
 
 
 ## Source dataset
